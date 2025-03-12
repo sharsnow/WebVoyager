@@ -1,0 +1,57 @@
+[
+  {
+    "role": "system",
+    "content": "Imagine you are a robot browsing the web, just like humans. Now you need to complete a task. In each iteration, you will receive an Observation that includes a screenshot of a webpage and some texts. This screenshot will feature Numerical Labels placed in the TOP LEFT corner of each Web Element.\nCarefully analyze the visual information to identify the Numerical Label corresponding to the Web Element that requires interaction, then follow the guidelines and choose one of the following actions:\n1. Click a Web Element.\n2. Delete existing content in a textbox and then type content. \n3. Scroll up or down. Multiple scrolls are allowed to browse the webpage. Pay attention!! The default scroll is the whole window. If the scroll widget is located in a certain area of the webpage, then you have to specify a Web Element in that area. I would hover the mouse there and then scroll.\n4. Wait. Typically used to wait for unfinished webpage processes, with a duration of 5 seconds.\n5. Go back, returning to the previous webpage.\n6. Google, directly jump to the Google search page. When you can't find information in some websites, try starting over with Google.\n7. Answer. This action should only be chosen when all questions in the task have been solved.\n\nCorrespondingly, Action should STRICTLY follow the format:\n- Click [Numerical_Label]\n- Type [Numerical_Label]; [Content]\n- Scroll [Numerical_Label or WINDOW]; [up or down]\n- Wait\n- GoBack\n- Google\n- ANSWER; [content]\n\nKey Guidelines You MUST follow:\n* Action guidelines *\n1) To input text, NO need to click textbox first, directly type content. After typing, the system automatically hits `ENTER` key. Sometimes you should click the search button to apply search filters. Try to use simple language when searching.  \n2) You must Distinguish between textbox and search button, don't type content into the button! If no textbox is found, you may need to click the search button first before the textbox is displayed. \n3) Execute only one action per iteration. \n4) STRICTLY Avoid repeating the same action if the webpage remains unchanged. You may have selected the wrong web element or numerical label. Continuous use of the Wait is also NOT allowed.\n5) When a complex Task involves multiple questions or steps, select \"ANSWER\" only at the very end, after addressing all of these questions (steps). Flexibly combine your own abilities with the information in the web page. Double check the formatting requirements in the task when ANSWER. \n* Web Browsing Guidelines *\n1) Don't interact with useless web elements like Login, Sign-in, donation that appear in Webpages. Pay attention to Key Web Elements like search textbox and menu.\n2) Vsit video websites like YouTube is allowed BUT you can't play videos. Clicking to download PDF is allowed and will be analyzed by the Assistant API.\n3) Focus on the numerical labels in the TOP LEFT corner of each rectangle (element). Ensure you don't mix them up with other numbers (e.g. Calendar) on the page.\n4) Focus on the date in task, you must look for results that match the date. It may be necessary to find the correct year, month and day at calendar.\n5) Pay attention to the filter and sort functions on the page, which, combined with scroll, can help you solve conditions like 'highest', 'cheapest', 'lowest', 'earliest', etc. Try your best to find the answer that best fits the task.\n\nYour reply should strictly follow the format:\nThought: {Your brief thoughts (briefly summarize the info that will help ANSWER)}\nAction: {One Action format you choose}\n\nThen the User will provide:\nObservation: {A labeled screenshot Given by User}"
+  },
+  {
+    "role": "user",
+    "content": "Now given a task: Search for information about the National Central University Career Expo and identify the careers being promoted.  Please interact with https://www.google.com.tw and get the answer.Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: To find information about the National Central University Career Expo and the careers being promoted, I need to use the Google search function. The relevant element for entering a search query is the textbox labeled with the numerical label [7].\n\nAction: Type [7]; National Central University Career Expo careers being promoted"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The screenshot contains a search textbox labeled [1] where I can enter my query about the National Central University Career Expo careers being promoted. There is also a search button labeled [6] that I can click to initiate the search. \n\nAction: Click [6]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The relevant search results about the National Central University Career Expo are present, particularly the one labeled [19], which includes information about the expo. This looks like it will lead to details about the careers being promoted.\n\nAction: Click [19]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The screenshot shows relevant sections related to the National Central University Career Expo, specifically focusing on the \"Career Fair\" and \"Fiesta\" event for 2025, which are highlighted in the elements labeled [19] and [21]. I need to click on the \"Career Fair\" section to gather more information about the careers being promoted.\n\nAction: Click [19]"
+  },
+  {
+    "role": "user",
+    "content": [
+      {
+        "type": "text",
+        "text": "Observation: please analyze the attached screenshot and give the Thought and Action. I've provided the tag name of each element and the text it contains (if text exists). Note that <textarea> or <input> may be textbox, but not exactly. Please focus more on the screenshot and then refer to the textual information.\n[0]: \"GoodJob Reader\";\t[1]: \"|\";\t[2]: \"Facebook\";\t[3]: \"\u570b\u7acb\u4e2d\u592e\u5927\u5b78\u5b78\u52d9\u8655 \u8077\u6daf\u767c\u5c55\u4e2d\u5fc3\";\t[4]: \"National Central University\";\t[6]: \"\u8077\u6daf\u6d3b\u52d5\";\t[7]: \"\u5b78\u751f\u6c42\u8077\";\t[8]: \"\u8aee\u8a62\u8f14\u5c0e\";\t[9]: \"\u6821\u5712\u5fb5\u624d\u5718\u968a\";\t[10]: \"\u4f01\u696d\u6c42\u624d\";\t[11]: \"\u7562\u696d\u6d41\u5411\u8abf\u67e5\";\t[12]: \"\u8868\u55ae\u4e0b\u8f09\";\t[13]: \"\u4e2d\u5fc3\u6210\u54e1\";\t[14]: \"\u8fd4\u56de\u9996\u9801\";\t[15]: \"2025-03-112025 \u6625\u5b63\u6821\u5712\u5fb5\u624d\u4f01\u696d\u535a\u89bd\u6703 Fiesta \u8077\u6daf\u5609\u5e74\u83ef\uff0135\";"
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "data:image/png;base64,{b64_img}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The screenshot provides information about the National Central University Career Expo, specifically the upcoming event scheduled for March 11, 2025. The highlighted section indicates it is a \"Fiesta\" job fair. To gather more about the careers being promoted at this event, I should look for more specific links or sections that detail those careers, starting from the \"Career Center\" or \"\u8077\u6daf\u6d3b\u52d5\" element labeled [6].\n\nAction: Click [6]"
+  }
+]

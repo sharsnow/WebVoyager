@@ -18,6 +18,7 @@ from utils import get_web_element_rect, encode_image, extract_information, print
     get_webarena_accessibility_tree, get_pdf_retrieval_ans_from_assistant, clip_message_and_obs, clip_message_and_obs_text_only
 
 
+
 def setup_logger(folder_path):
     log_file_path = os.path.join(folder_path, 'agent.log')
 
@@ -34,6 +35,7 @@ def setup_logger(folder_path):
 
 
 def driver_config(args):
+    # 設定selenium的模擬環境
     options = webdriver.ChromeOptions()
 
     if args.save_accessibility_tree:
@@ -42,21 +44,27 @@ def driver_config(args):
     if args.force_device_scale:
         options.add_argument("--force-device-scale-factor=1")
     if args.headless:
+        # headless模式不會額外開啟視窗，會在背景運行任務
         options.add_argument("--headless")
         options.add_argument(
             "--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
         )
+    # 設定下載路徑，以便處理PDF檔案
     options.add_experimental_option(
         "prefs", {
             "download.default_directory": args.download_dir,
             "plugins.always_open_pdf_externally": True
         }
     )
+    options.add_argument("disable-blink-features=AutomationControlled")
+
     return options
+
 
 
 def format_msg(it, init_msg, pdf_obs, warn_obs, web_img_b64, web_text):
     if it == 1:
+        # 第一次執行的prompt
         init_msg += f"I've provided the tag name of each element and the text it contains (if text exists). Note that <textarea> or <input> may be textbox, but not exactly. Please focus more on the screenshot and then refer to the textual information.\n{web_text}"
         init_msg_format = {
             'role': 'user',
@@ -69,6 +77,7 @@ def format_msg(it, init_msg, pdf_obs, warn_obs, web_img_b64, web_text):
         return init_msg_format
     else:
         if not pdf_obs:
+            #  第二次之後，可能有錯誤訊息要附加到prompt
             curr_msg = {
                 'role': 'user',
                 'content': [
@@ -80,6 +89,7 @@ def format_msg(it, init_msg, pdf_obs, warn_obs, web_img_b64, web_text):
                 ]
             }
         else:
+            # 對於PDF檔案，會有另外的提示pdf_obs
             curr_msg = {
                 'role': 'user',
                 'content': [
@@ -115,6 +125,7 @@ def format_msg_text_only(it, init_msg, pdf_obs, warn_obs, ac_tree):
 
 
 def call_gpt4v_api(args, openai_client, messages):
+    # 呼叫GPT API，處理錯誤
     retry_times = 0
     while True:
         try:
@@ -161,12 +172,14 @@ def call_gpt4v_api(args, openai_client, messages):
 
 
 def exec_action_click(info, web_ele, driver_task):
+    # 在selenium執行點擊的動作
     driver_task.execute_script("arguments[0].setAttribute('target', '_self')", web_ele)
     web_ele.click()
     time.sleep(3)
 
 
 def exec_action_type(info, web_ele, driver_task):
+    # 在selenium執行輸入的動作
     warn_obs = ""
     type_content = info['content']
 
@@ -207,6 +220,7 @@ def exec_action_type(info, web_ele, driver_task):
 
 
 def exec_action_scroll(info, web_eles, driver_task, args, obs_info):
+    # 在selenium執行滾動的動作
     scroll_ele_number = info['number']
     scroll_content = info['content']
     if scroll_ele_number == "WINDOW":
@@ -232,11 +246,12 @@ def exec_action_scroll(info, web_eles, driver_task, args, obs_info):
 
 
 def main():
+    # 參數設定
     parser = argparse.ArgumentParser()
     parser.add_argument('--test_file', type=str, default='data/test.json')
     parser.add_argument('--max_iter', type=int, default=5)
-    parser.add_argument("--api_key", default="key", type=str, help="YOUR_OPENAI_API_KEY")
-    parser.add_argument("--api_model", default="gpt-4-vision-preview", type=str, help="api model name")
+    parser.add_argument("--api_key", default="key", type=str, help="my-api-key")
+    parser.add_argument("--api_model", default="gpt-4-vision-preview", type=str, help="model")
     parser.add_argument("--output_dir", type=str, default='results')
     parser.add_argument("--seed", type=int, default=None)
     parser.add_argument("--max_attached_imgs", type=int, default=1)
@@ -264,13 +279,14 @@ def main():
     os.makedirs(result_dir, exist_ok=True)
 
     # Load tasks
+    # 這邊會讀取test_file裡的JSON檔案，每一行代表一個task
     tasks = []
     with open(args.test_file, 'r', encoding='utf-8') as f:
         for line in f:
             tasks.append(json.loads(line))
 
 
-    for task_id in range(len(tasks)):
+    for task_id in range(len(tasks)): # 逐一處理每個task
         task = tasks[task_id]
         task_dir = os.path.join(result_dir, 'task{}'.format(task["id"]))
         os.makedirs(task_dir, exist_ok=True)
@@ -304,12 +320,14 @@ def main():
         warn_obs = ""  # Type warning
         pattern = r'Thought:|Action:|Observation:'
 
+        # prompt可以參考prompt.py
         messages = [{'role': 'system', 'content': SYSTEM_PROMPT}]
         obs_prompt = "Observation: please analyze the attached screenshot and give the Thought and Action. "
         if args.text_only:
             messages = [{'role': 'system', 'content': SYSTEM_PROMPT_TEXT_ONLY}]
             obs_prompt = "Observation: please analyze the accessibility tree and give the Thought and Action."
 
+        # 初始prompt
         init_msg = f"""Now given a task: {task['ques']}  Please interact with https://www.example.com and get the answer. \n"""
         init_msg = init_msg.replace('https://www.example.com', task['web'])
         init_msg = init_msg + obs_prompt
@@ -318,12 +336,14 @@ def main():
         accumulate_prompt_token = 0
         accumulate_completion_token = 0
 
+        # 在小於最大動作次數下，不斷重複
         while it < args.max_iter:
             logging.info(f'Iter: {it}')
             it += 1
             if not fail_obs:
                 try:
                     if not args.text_only:
+                        # 繪製可操作區域的方框，程式碼可以參考utils.py
                         rects, web_eles, web_eles_text = get_web_element_rect(driver_task, fix_color=args.fix_box_color)
                     else:
                         accessibility_tree_path = os.path.join(task_dir, 'accessibility_tree{}'.format(it))
@@ -337,6 +357,7 @@ def main():
                     logging.error(e)
                     break
 
+                # 截圖
                 img_path = os.path.join(task_dir, 'screenshot{}.png'.format(it))
                 driver_task.save_screenshot(img_path)
 
@@ -349,6 +370,7 @@ def main():
                 b64_img = encode_image(img_path)
 
                 # format msg
+                # 把圖片、文字標籤整理成prompt
                 if not args.text_only:
                     curr_msg = format_msg(it, init_msg, pdf_obs, warn_obs, b64_img, web_eles_text)
                 else:
@@ -362,6 +384,7 @@ def main():
                 messages.append(curr_msg)
 
             # Clip messages, too many attached images may cause confusion
+            # 減少附加的圖片
             if not args.text_only:
                 messages = clip_message_and_obs(messages, args.max_attached_imgs)
             else:
@@ -382,6 +405,7 @@ def main():
 
 
             # remove the rects on the website
+            # 執行完決策，移除掉方框
             if (not args.text_only) and rects:
                 logging.info(f"Num of interactive elements: {len(rects)}")
                 for rect_ele in rects:
@@ -391,6 +415,7 @@ def main():
 
 
             # extract action info
+            # 從GPT-4v的回應中，取得Thought, Action，兩個都要有才算完整的回覆
             try:
                 assert 'Thought:' in gpt_4v_res and 'Action:' in gpt_4v_res
             except AssertionError as e:
@@ -410,6 +435,8 @@ def main():
             try:
                 window_handle_task = driver_task.current_window_handle
                 driver_task.switch_to.window(window_handle_task)
+
+                # 下面會分別執行每項動作
 
                 if action_key == 'click':
                     if not args.text_only:
@@ -494,6 +521,7 @@ def main():
                     fail_obs = ""
                 time.sleep(2)
 
+        # 結束，關閉瀏覽器
         print_message(messages, task_dir)
         driver_task.quit()
         logging.info(f'Total cost: {accumulate_prompt_token / 1000 * 0.01 + accumulate_completion_token / 1000 * 0.03}')
