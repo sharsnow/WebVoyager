@@ -1,43 +1,69 @@
-# WebVoyager  
-AI agnet 操作
-` python .\run.py --test_file data/tasks_test.jsonl `
-以 gpt-4o-mini進行操作   
+## WebVoyager
+ 
+### AI agnet 操作
 
-## Search Flight  
+python .\main.py  --api_key "API_KEY" --api_model gpt-4o-mini
 
-` python .\run.py --test_file data/SeachFlight.jsonl --api_key API_HEY --api_model gpt-4o-mini `  
+### 主題
+**旅遊小助手**
 
-Prompt: 要求尋找今年10/1台北到日本最便宜的機票   
-Result: 在google > 航班 找尋出最便宜的機票   
+1. 幫助旅客尋找合適的飯店
+2. 尋找旅客適合的景點
+3. 提供當地的天氣預報
 
-![Search Fight](results/20250312_15_53_50/taskSearchFlight/screenshot5.png)  
----
-## Find NCU Career  
-` python .\run.py --test_file data/FindNCUCareer.jsonl --api_key API_HEY--api_model gpt-4o-mini `
+### 更改內容
 
-Prompt: 要求尋找中央大學今年的企業博覽會相關資訊   
-Result: 以google進行關鍵字搜尋 > 點入職捱嘉年華   
-![Find NCU Career](results/20250312_15_50_44/taskFindNCUCareer/screenshot5.png)
+#### 1. 新增PROMPT 
+修改 prompt.py 
 
----
-## Login eeclass  
-` python .\run.py --test_file data/LogIneeclass.jsonl --api_key API_HEY--api_model gpt-4o-mini `
+`TRAVEL_PROMPT = """
+You are a professional travel consultant. 
+You need to ask the customer where they are traveling to this time.
+"""`  
+提示gpt主要功能是旅遊助手，以幫助旅客處理相關問題  
 
-Prompt: 要求登入中央大學eeclass (已給帳號及密碼)   
-Result1: 在一剛開始prompts指令未下清楚，導致Webvoyager會嘗試登入google帳號  
-![Login google](results/20250312_15_32_27/taskLogInEEclass/screenshot4.png) 
-Result2: 以google取得eelcass網站 > 輸入帳號密碼 > 無法登入  
-在登入過程中 ，嘗試輸入帳號後會直接進行輸出而無法正確輸入密碼儘管在"interact_message.json"中有提到會兩者皆輸入   
->To log in to the EEClass system, I need to input the username in the textbox labeled [0] and the password in the textbox labeled [1]. After entering both, I will click the login button labeled [3] to proceed.\n\nAction: Type [0]; 113524020
+`FORMAT_SETTING_PROMPT = """You will receive travel-related information. Please convert it into the following format.And only display the content in JSONL format! Also, do not repeat the same task. ## Task Setting example What are the family-friendly hotels in New York City for a budget of $250 per night?" ## Hotel Information{"web_name": "Agoda", "id": "Adoga", "ques": "Task.", "web": "https://www.agoda.com/}"## Weather Information
+{"web_name": "weather", "id": "weather", "ques": "Tasks.", "web": "https://www.cwa.gov.tw/V8/C/W/week.html"}## Tourist Attraction Information{"web_name": "Google", "id": "google", "ques": "Task.", "web": "https://www.google.com/}"## Notice
+Please check if your data has been updated or corrected, prioritizing 'content' in order from old to new.
+"""`  
+用來設定此助理可以做甚麼事並且根據這些規則進行回覆及設定格式  
 
-![Login eeclass](results/20250312_15_34_23/taskLogInEEclass/screenshot5.png)
 
----
-## Youtube Search  
-` python .\run.py --test_file data/YoutubeSearch.jsonl --api_key API_HEY--api_model gpt-4o-mini `
-Prompt: 要求搜尋2024撥放量最高的歌曲並在Youtube進行撥放    
-Result: 可以取得最高的撥放量歌曲，在下一步前往youtube時會點擊此網站"youtube"前往，而網站會在此跳出廣告並且無法進行點擊x或是其他方式進行刪除，導致無法前往youtube。或許在這部分需要拆成兩部分進行網頁搜尋會是較為恰當的結果。
-> with the highest streams showing Billie Eilish's \"BIRDS OF A FEATHER.\"
+`TRAVEL_END_PROMPT =""" You are a professional travel consultant, and your service has now ended. Based on the previous conversation, please provide a brief summary of this experience."""`  
+希望可以為此次一輪作總結  
 
-![Youtube Search](results/20250312_15_42_01/taskYoutubeSearch/screenshot4.png)
-![AD](results/20250312_15_42_01/taskYoutubeSearch/screenshot5.png)
+#### 2. 新增main.py內容
+類似於agent，主要用來處理旅客的事項並將問題處理後再傳給WebVoyager做網頁的尋找。因此，新增`prompts.py`指令使agent的工作事項能夠更加準確。  
+透過此方式使用者體驗會更加提高，可以更加即時的修正目前的需求。  
+
+#### 3. 修改run.py指令
+由於已新增`main.py`，因此修正了`run.py`指令讓task可以直接進行接收，而非再透過jsonl進行處理。  
+
+
+
+### 執行結果
+
+經測試後可以更新`main.py`的記憶  
+#### 1. i want to go to taipei on 3/19-3/20
+> Thought: The screenshot indicates that I need to finalize my search by clicking on the search button after entering "台北市" (Taipei City) in the input field labeled [18]. The search button is not explicitly labeled in the provided details, but it seems I should simply proceed with the search.  
+
+![Agoda](results/20250317_01_00_10/taskAgoda/screenshot5.png)  
+  
+> Thought: The screenshot shows the weather forecast for Taipei from March 19 to 20, 2024. The forecast for these dates is labeled with 40 (March 19) and 41 (March 20). The information needed is visible under these labels.  
+  
+![google](results/20250317_01_00_10/taskgoogle/screenshot5.png)   
+>  Thought: The screenshot displays a list of tourist attractions in Taipei, showing various options with their names, ratings, and some prices. To gather more details, I will click on the first attraction, "國立中正紀念堂" ([22]), as it appears to have the most information and is highlighted.  
+
+![weather](results/20250317_01_00_10/taskgoogle/screenshot5.png)
+> Thought: The screenshot shows the weather forecast for Taipei from March 19 to 20, 2024. The forecast for these dates is labeled with 40 (March 19) and 41 (March 20). The information needed is visible under these labels.   
+ 
+#### 2. oh, i want change to go to taichang, the day is same
+
+![Agoda](results/20250317_01_05_36/taskAgoda/screenshot5.png)
+>Thought: The screenshot indicates that I can search for hotels in Taichung using the input field labeled [18]. The relevant button to finalize the search does not appear to be explicitly labeled in the current view, but the search action should typically be executed as soon as the city is entered. Since I have already entered the city name, I will perform a click action on the search functionality to proceed with finding family-friendly hotels.  
+
+![google](results/20250317_01_05_36/taskgoogle/screenshot5.png)
+> The screenshot shows various tourist attractions in Taichung divided into categories like outdoor spots, historical sites, and museums. There are also additional links, like "THE 15 BEST Things to Do in Taichung" from Tripadvisor. Given the relevant information, I will choose to explore more attractions by clicking on the button labeled [9].  
+
+![weather](results/20250317_01_05_36/taskweather/screenshot3.png)
+> The elements show a calendar with daily weather forecasts. For Taichung on March 19, 2024 (labeled [40]), it indicates a high of 22°C. On March 20, 2024 (labeled [41]), it indicates a high of 23°C. The information is present in a clear format.  
