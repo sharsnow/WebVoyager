@@ -54,7 +54,7 @@ Please check if your data has been updated or corrected, prioritizing 'content' 
 ![google](results/20250317_01_00_10/taskgoogle/screenshot5.png)   
 >  Thought: The screenshot displays a list of tourist attractions in Taipei, showing various options with their names, ratings, and some prices. To gather more details, I will click on the first attraction, "國立中正紀念堂" ([22]), as it appears to have the most information and is highlighted.  
 
-![weather](results/20250317_01_00_10/taskgoogle/screenshot5.png)
+![weather](results/20250317_01_00_10/taskweather/screenshot5.png)
 > Thought: The screenshot shows the weather forecast for Taipei from March 19 to 20, 2024. The forecast for these dates is labeled with 40 (March 19) and 41 (March 20). The information needed is visible under these labels.   
  
 #### 2. oh, i want change to go to taichang, the day is same
