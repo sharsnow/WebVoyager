@@ -10,19 +10,20 @@ And only display the content in JSONL format! Also, do not repeat the same task.
 What are the family-friendly hotels in New York City for a budget of $250 per night?"
 
 ## Hotel Information
-{"web_name": "Agoda", "id": "Adoga", "ques": "Task.", "web": "https://www.agoda.com/"
+{"web_name": "booking", "id": "booking", "ques": "Task.", "web": "https://www.booking.com/"}
 
 ## Weather Information
 {"web_name": "weather", "id": "weather", "ques": "Tasks.", "web": "https://www.cwa.gov.tw/V8/C/W/week.html"}
 ## Tourist Attraction Information
-{"web_name": "Google", "id": "google", "ques": "Task.", "web": "https://www.google.com/"
+{"web_name": "Google", "id": "google", "ques": "Task.", "web": "https://www.google.com/"}
 
 ## Notice
 Please check if your data has been updated or corrected, prioritizing 'content' in order from old to new.
 """
 TRAVEL_END_PROMPT ="""
-You are a professional travel consultant, and your service has now ended.
-Based on the previous conversation, please provide a brief summary of this experience.
+I hope you can provide a complete summary or plan based on the above content, 
+and communicate with the traveler in a professional and engaging manner, 
+so that they can have a well-rounded travel experience based on your response.
 """
 
 SYSTEM_PROMPT = """Imagine you are a robot browsing the web, just like humans. Now you need to complete a task. In each iteration, you will receive an Observation that includes a screenshot of a webpage and some texts. This screenshot will feature Numerical Labels placed in the TOP LEFT corner of each Web Element.
