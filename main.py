@@ -8,30 +8,6 @@ import json
 from openai import OpenAI
 from prompts import TRAVEL_PROMPT, FORMAT_SETTING_PROMPT, TRAVEL_END_PROMPT
 
-def take_action():
-    # 開啟檔案，允許追加寫入
-    with open("output.jsonl", "a") as file:
-        while True:
-            web_name = input("Enter website name (or 'exit' to stop): ")
-            if web_name.lower() == 'exit':
-                break
-
-            web_id = input("Enter website ID: ")
-            ques = input("Enter question: ")
-            web_url = input("Enter website URL: ")
-
-            # 建立 JSON 物件
-            data = {
-                "web_name": web_name,
-                "id": web_id,
-                "ques": ques,
-                "web": web_url
-            }
-
-            # 以 JSONL 格式存入
-            file.write(json.dumps(data) + "\n")
-
-    print("JSONL data saved to output.jsonl")
 
 
 def main():
