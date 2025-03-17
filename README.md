@@ -32,42 +32,42 @@ Please check if your data has been updated or corrected, prioritizing 'content' 
 `TRAVEL_END_PROMPT =""" I hope you can provide a complete summary or plan based on the above content, and communicate with the traveler in a professional and engaging manner, so that they can have a well-rounded travel experience based on your response."""`  
 為此次一輪作總結  
 
-#### 2. 新增main.py內容
+#### 2. 新增main.py內容  
 類似於agent，主要用來處理旅客的事項並將問題處理後再傳給WebVoyager做網頁的尋找。因此，新增`prompts.py`指令使agent的工作事項能夠更加準確。  
 透過此方式使用者體驗會更加提高，可以更加即時的修正目前的需求。  
 
-#### 3. 修改run.py指令
+#### 3. 修改run.py指令  
 由於已新增`main.py`，因此修正了`run.py`指令讓task可以直接進行接收，而非再透過jsonl進行處理。  
 
-### 思考邏輯
+### 思考邏輯  
 
-`main.py` 
-1. 在旅客使用此專案是會依照`prompts.py/TRAVEL_PROMPT`詢問說"本次旅遊要前往的地點"  
-2. 將旅客的需求透過`prompts.py/FORMAT_SETTING_PROMPT`轉換`list`格式並做成Tasks 
+`main.py`  
+1. 在旅客使用此專案是會依照`prompts.py/TRAVEL_PROMPT`詢問說"本次旅遊要前往的地點"   
+2. 將旅客的需求透過`prompts.py/FORMAT_SETTING_PROMPT`轉換`list`格式並做成Tasks  
  
-`run.py`
+`run.py`  
 3. 將Tasks透過WebVoyager進行網頁搜索  
 
-`main.py`
-4. 輸出至前端讓顧客明瞭目前的執行進度以及思考內容   
+`main.py`   
+4. 輸出至前端讓顧客明瞭目前的執行進度以及思考內容    
 5. 回到第三步直至Tasks完成  
-6. 將所有的Tasks的內容儲存並且透過`prompts.py/TRAVEL_END_PROMPT`進行本次旅遊體驗的總結
-7. 回到第一步直至結束
+6. 將所有的Tasks的內容儲存並且透過`prompts.py/TRAVEL_END_PROMPT`進行本次旅遊體驗的總結  
+7. 回到第一步直至結束  
 
    
 
 ### 執行結果
 
-經測試後可以更新`main.py`的記憶
+經測試後可以更新`main.py`的記憶  
 #### main.py 
-1.   第一次嘗試
-輸入 I want to go to taipei from 3/19 to 3/20
+1.   第一次嘗試  
+輸入 I want to go to taipei from 3/19 to 3/20   
 產出以下Prompt  
 - what are some family-friendly hotels in Taipei for a budget of $250 per night?
 - What is the weather forecast in Taipei for March 19 and 20?
 - What are the top tourist attractions to visit in Taipei?
 
-最後總結
+最後總結   
 Dear Traveler,
 
 I am excited to assist you in planning your upcoming trip to Taipei! Below is a summary of your travel details, including hotel accommodations, weather forecast, and must-see attractions to enhance your travel experience.
@@ -111,14 +111,14 @@ Warm regards,
 
 [Your Name]
 Travel Advisor
-2. 第二次嘗試 
-輸入 oh, i want change to go to taichang, the day is same  
-產出以下prompts
+2. 第二次嘗試  
+輸入 oh, i want change to go to taichang, the day is same   
+產出以下prompts   
 - What are some family-friendly hotels in Taichung for a budget of $250 per night?
 - What is the weather forecast in Taichung for March 19 and 20?  
 - What are the top tourist attractions to visit in Taichung?
    
-最後總結
+最後總結   
 **Travel Plan for Taichung, Taiwan (March 2025)**
 
 **Check-in Date:** March 1, 2025
