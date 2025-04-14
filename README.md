@@ -1,6 +1,6 @@
 # WebVoyager
 ## github網址  
-https://github.com/sharsnow/WebVoyager/tree/muti-agent  
+https://github.com/sharsnow/WebVoyager/tree/multi-agent  
 
 ## AI agnet 操作
 
