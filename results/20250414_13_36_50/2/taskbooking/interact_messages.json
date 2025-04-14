@@ -1,0 +1,65 @@
+[
+  {
+    "role": "system",
+    "content": "Imagine you are a robot browsing the web, just like humans. Now you need to complete a task. In each iteration, you will receive an Observation that includes a screenshot of a webpage and some texts. This screenshot will feature Numerical Labels placed in the TOP LEFT corner of each Web Element.\nCarefully analyze the visual information to identify the Numerical Label corresponding to the Web Element that requires interaction, then follow the guidelines and choose one of the following actions:\n1. Click a Web Element.\n2. Delete existing content in a textbox and then type content. \n3. Scroll up or down. Multiple scrolls are allowed to browse the webpage. Pay attention!! The default scroll is the whole window. If the scroll widget is located in a certain area of the webpage, then you have to specify a Web Element in that area. I would hover the mouse there and then scroll.\n4. Wait. Typically used to wait for unfinished webpage processes, with a duration of 5 seconds.\n5. Go back, returning to the previous webpage.\n6. Google, directly jump to the Google search page. When you can't find information in some websites, try starting over with Google.\n7. Answer. This action should only be chosen when all questions in the task have been solved.\n\nCorrespondingly, Action should STRICTLY follow the format:\n- Click [Numerical_Label]\n- Type [Numerical_Label]; [Content]\n- Scroll [Numerical_Label or WINDOW]; [up or down]\n- Wait\n- GoBack\n- Google\n- ANSWER; [content]\n\nKey Guidelines You MUST follow:\n* Action guidelines *\n1) To input text, NO need to click textbox first, directly type content. After typing, the system automatically hits `ENTER` key. Sometimes you should click the search button to apply search filters. Try to use simple language when searching.  \n2) You must Distinguish between textbox and search button, don't type content into the button! If no textbox is found, you may need to click the search button first before the textbox is displayed. \n3) Execute only one action per iteration. \n4) STRICTLY Avoid repeating the same action if the webpage remains unchanged. You may have selected the wrong web element or numerical label. Continuous use of the Wait is also NOT allowed.\n5) When a complex Task involves multiple questions or steps, select \"ANSWER\" only at the very end, after addressing all of these questions (steps). Flexibly combine your own abilities with the information in the web page. Double check the formatting requirements in the task when ANSWER. \n* Web Browsing Guidelines *\n1) Don't interact with useless web elements like Login, Sign-in, donation that appear in Webpages. Pay attention to Key Web Elements like search textbox and menu.\n2) Vsit video websites like YouTube is allowed BUT you can't play videos. Clicking to download PDF is allowed and will be analyzed by the Assistant API.\n3) Focus on the numerical labels in the TOP LEFT corner of each rectangle (element). Ensure you don't mix them up with other numbers (e.g. Calendar) on the page.\n4) Focus on the date in task, you must look for results that match the date. It may be necessary to find the correct year, month and day at calendar.\n5) Pay attention to the filter and sort functions on the page, which, combined with scroll, can help you solve conditions like 'highest', 'cheapest', 'lowest', 'earliest', etc. Try your best to find the answer that best fits the task.\n\nYour reply should strictly follow the format:\nThought: {Your brief thoughts (briefly summarize the info that will help ANSWER)}\nAction: {One Action format you choose}\n\nThen the User will provide:\nObservation: {A labeled screenshot Given by User}"
+  },
+  {
+    "role": "user",
+    "content": "Now given a task: Find a hotel in Taipei for 2 guests, checking in on 4/17 for one night under NT$5000  Please interact with https://www.etrip.net/ and get the answer.Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: I need to update the location to \"Taipei\" and change the check-in date to 4/17. Let's start by changing the location first.\n\nAction: Click [3]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The location needs to be updated to \"Taipei.\" The current input field for the location is labeled as [3]. I will click this input area to enter \"Taipei\".\n\nAction: Click [3]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: I need to enter \"Taipei\" in the location field, which is indicated by [3]. \n\nAction: Type [3]; Taipei"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The location is already set to \"\u53f0\u5317\u5e02\" (Taipei City). Now, I need to adjust the check-in date to the 17th of April. This date is not visible, so I need to move to the next week in the calendar.\n\nAction: Click [27]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The check-in date is already set to April 17th. Now, I need to search for available hotels.\n\nAction: Click [7]"
+  },
+  {
+    "role": "user",
+    "content": [
+      {
+        "type": "text",
+        "text": "Observation: please analyze the attached screenshot and give the Thought and Action. I've provided the tag name of each element and the text it contains (if text exists). Note that <textarea> or <input> may be textbox, but not exactly. Please focus more on the screenshot and then refer to the textual information.\n[1]: <button> \"\u53f0\u5317\u5e02\";\t[2]: <button> \"4\u670817\u65e5\";\t[3]: <button> \"4\u670818\u65e5\";\t[4]: <button> \"2 \u4f4d\u5ba2\u4eba, 1 \u9593\u5ba2\u623f\";\t[5]: <button> \"\u641c\u5c0b\";\t[6]: <button> \"TWD\";\t[7]: <button> \"\u767b\u5165\";\t[8]: <button> \"\u7be9\u9078\u689d\u4ef6\";\t[9]: <button> \"\u5411\u53f3\u6372\u52d5\";\t[10]: <button> \"\u50f9\u683c\";\t[11]: <button> \"\u514d\u8cbb\u53d6\u6d88\";\t[12]: <button> \"4 \u81f3 5 \u661f\u7d1a\";\t[13]: <button> \"8.0+ \u8a55\u5206\";\t[14]: <button> \"\u6e38\u6cf3\u6c60\";\t[15]: <button> \"\u505c\u8eca\u5834\";\t[16]: <button> \"\u5bf5\u7269\u53cb\u5584\";\t[17]: <button> \"\u5bb6\u5ead\";\t[18]: <button> \"\u514d\u8cbbWi-Fi\u7121\u7dda\u7db2\u8def\";\t[19]: <button> \"\u8a2d\u65bd\";\t[20]: <button> \"\u81b3\u98df\u65b9\u6848\";\t[21]: <button> \"\u6aa2\u8996\u8a55\u5206\";\t[22]: \"\u6700\u4f73\u5339\u914d\u50f9\u683c\u6700\u4f4e\u8a55\u8ad6\u6700\u591a\u8ddd\u96e2\u9152\u5e97\u661f\u7d1a (\u7531\u4f4e\u81f3\u9ad8)\u9152\u5e97\u661f\u7d1a (\u7531\u9ad8\u81f3\u4f4e)\", \"\u6392\u5e8f\u65b9\u5f0f\";\t[23]: \"\u986f\u793a\u7e3d\u91d1\u984d\";\t[27]: \"\u53f0\u5317\u51f1\u9054\u5927\u98ef\u5e97\u842c\u83ef\u5340, \u53f0\u5317\u5e02\u8ddd\u96e2\u53f0\u5317\u5e02\u4e2d\u5fc3 8.8 \u516c\u91cc8.4\u975e\u5e38\u597d46,205 \u5247\u8a55\u8ad6\";\t[28]: \"Trip.com$3,044\";\t[29]: \"Vio.com$3,643\";\t[30]: <button> \"\u66f4\u591a\u512a\u60e0\u67e5\u770b\u5168\u90e8\";\t[31]: \"$3,643$3,183\uff0f\u665a\u6aa2\u8996\u512a\u60e0\";\t[33]: \"\u963f\u6a39\u570b\u969b\u65c5\u5e97\u677e\u5c71\u5340, \u53f0\u5317\u5e02\u8ddd\u96e2\u53f0\u5317\u5e02\u4e2d\u5fc3 4.8 \u516c\u91cc8.9\u8d85\u8b9a6,876 \u5247\u8a55\u8ad6\";\t[34]: \"$7,004$5,530\uff0f\u665a\u6aa2\u8996\u512a\u60e0\";\t[35]: <button> \"\u5c55\u958b\u5730\u5716\";\t[36]: <button> \"\u653e\u5927\u5730\u5716\";\t[37]: <button> \"\u7e2e\u5c0f\u5730\u5716\";\t[39]: <button> \"\u885e\u661f\";\t[40]: <button> \"3D\";\t[41]: <button> \"\u5207\u63db\u5716\u5c64\";"
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "data:image/png;base64,{b64_img}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The hotel \"\u53f0\u5317\u51f1\u9054\u5927\u98ef\u5e97\" (Caesar Park Hotel) has a price of $3,183 per night, which fits the budget. This information is linked to element [31].\n\nAction: ANSWER; Hotel available: \u53f0\u5317\u51f1\u9054\u5927\u98ef\u5e97 (Caesar Park Hotel), Price: $3,183 per night."
+  }
+]

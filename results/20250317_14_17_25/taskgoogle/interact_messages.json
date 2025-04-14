@@ -1,0 +1,57 @@
+[
+  {
+    "role": "system",
+    "content": "Imagine you are a robot browsing the web, just like humans. Now you need to complete a task. In each iteration, you will receive an Observation that includes a screenshot of a webpage and some texts. This screenshot will feature Numerical Labels placed in the TOP LEFT corner of each Web Element.\nCarefully analyze the visual information to identify the Numerical Label corresponding to the Web Element that requires interaction, then follow the guidelines and choose one of the following actions:\n1. Click a Web Element.\n2. Delete existing content in a textbox and then type content. \n3. Scroll up or down. Multiple scrolls are allowed to browse the webpage. Pay attention!! The default scroll is the whole window. If the scroll widget is located in a certain area of the webpage, then you have to specify a Web Element in that area. I would hover the mouse there and then scroll.\n4. Wait. Typically used to wait for unfinished webpage processes, with a duration of 5 seconds.\n5. Go back, returning to the previous webpage.\n6. Google, directly jump to the Google search page. When you can't find information in some websites, try starting over with Google.\n7. Answer. This action should only be chosen when all questions in the task have been solved.\n\nCorrespondingly, Action should STRICTLY follow the format:\n- Click [Numerical_Label]\n- Type [Numerical_Label]; [Content]\n- Scroll [Numerical_Label or WINDOW]; [up or down]\n- Wait\n- GoBack\n- Google\n- ANSWER; [content]\n\nKey Guidelines You MUST follow:\n* Action guidelines *\n1) To input text, NO need to click textbox first, directly type content. After typing, the system automatically hits `ENTER` key. Sometimes you should click the search button to apply search filters. Try to use simple language when searching.  \n2) You must Distinguish between textbox and search button, don't type content into the button! If no textbox is found, you may need to click the search button first before the textbox is displayed. \n3) Execute only one action per iteration. \n4) STRICTLY Avoid repeating the same action if the webpage remains unchanged. You may have selected the wrong web element or numerical label. Continuous use of the Wait is also NOT allowed.\n5) When a complex Task involves multiple questions or steps, select \"ANSWER\" only at the very end, after addressing all of these questions (steps). Flexibly combine your own abilities with the information in the web page. Double check the formatting requirements in the task when ANSWER. \n* Web Browsing Guidelines *\n1) Don't interact with useless web elements like Login, Sign-in, donation that appear in Webpages. Pay attention to Key Web Elements like search textbox and menu.\n2) Vsit video websites like YouTube is allowed BUT you can't play videos. Clicking to download PDF is allowed and will be analyzed by the Assistant API.\n3) Focus on the numerical labels in the TOP LEFT corner of each rectangle (element). Ensure you don't mix them up with other numbers (e.g. Calendar) on the page.\n4) Focus on the date in task, you must look for results that match the date. It may be necessary to find the correct year, month and day at calendar.\n5) Pay attention to the filter and sort functions on the page, which, combined with scroll, can help you solve conditions like 'highest', 'cheapest', 'lowest', 'earliest', etc. Try your best to find the answer that best fits the task.\n\nYour reply should strictly follow the format:\nThought: {Your brief thoughts (briefly summarize the info that will help ANSWER)}\nAction: {One Action format you choose}\n\nThen the User will provide:\nObservation: {A labeled screenshot Given by User}"
+  },
+  {
+    "role": "user",
+    "content": "Now given a task: What are the top tourist attractions to visit in Taipei?  Please interact with https://www.google.com/ and get the answer.Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: To find the top tourist attractions to visit in Taipei, I need to enter a search query into the Google search textbox located at the Numerical Label [7].\n\nAction: Type [7]; top tourist attractions to visit in Taipei"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The search query \"top tourist attractions to visit in Taipei\" is already present in the search textbox labeled [1]. Now, I need to click the search button labeled [6] to get the search results.\n\nAction: Click [6]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The search results for \"top tourist attractions to visit in Taipei\" have loaded. I can see several popular attractions listed. The relevant attractions are shown in elements with Numerical Labels [20], [21], [22], [23], and [24]. I will scroll down to view more attractions and details.\n\nAction: Scroll [WINDOW]; down"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The search results for top tourist attractions in Taipei are displayed, including several historical sites, outdoor attractions, and museums. The identified attractions are Taipei 101, National Taiwan Museum, Yangmingshan National Park, and others. Additionally, there are various tour options available for visiting these sites. I will proceed to scroll down further to get more information on the listed attractions.\n\nAction: Scroll [WINDOW]; down"
+  },
+  {
+    "role": "user",
+    "content": [
+      {
+        "type": "text",
+        "text": "Observation: please analyze the attached screenshot and give the Thought and Action. I've provided the tag name of each element and the text it contains (if text exists). Note that <textarea> or <input> may be textbox, but not exactly. Please focus more on the screenshot and then refer to the textual information.\n[1]: <textarea> \"top tourist attractions to visit in Taipei\", \"\u641c\u5c0b\";\t[5]: <button> \"\u641c\u5c0b\";\t[6]: \"\u5feb\u901f\u8a2d\u5b9a\", \"\u8a2d\u5b9a\";\t[8]: \"\u767b\u5165\";\t[9]: \"4.9\";\t[11]: \"(6349)\";\t[12]: \"4.6\";\t[14]: \"(319)\";\t[15]: \"4.8\";\t[17]: \"(1698)\";\t[18]: \"4.6\";\t[20]: \"(793)\";\t[21]: \"4.6\";\t[23]: \"(309)\";\t[25]: \"What is the number one tourist attraction in Taipei?\";\t[26]: \"What famous tourist attraction is found in Taiwan?\";\t[27]: \"What to see in Taipei in 3 days?\";\t[28]: \"What to see in Taipei in one day?\";\t[29]: \"\u610f\u898b\u56de\u994b\";\t[30]: \"THE 15 BEST Things to Do in Taipei (2025)\";\t[32]: \"Tripadvisor\";\t[33]: \"\u203a Attracti...\";\t[34]: \"\u7ffb\u8b6f\u9019\u500b\u7db2\u9801\";\t[37]: \"Free Entry\";\t[38]: \"Taipei 101\";\t[39]: \"Taipei Zoo\";\t[40]: \"Best Group Activities in Taipei\";\t[42]: \"\u81fa\u5317\u65c5\u904a\u7db2\";"
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "data:image/png;base64,{b64_img}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The search results show various tourist attractions in Taipei, including \"THE 15 BEST Things to Do in Taipei (2025)\" with ratings, and links from sources such as Tripadvisor. I need to click on the link labeled [30] to gather detailed information about the attractions.\n\nAction: Click [30]"
+  }
+]
