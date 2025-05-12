@@ -1,0 +1,97 @@
+[
+  {
+    "role": "system",
+    "content": "Imagine you are a robot browsing the web, just like humans. Now you need to complete a task. In each iteration, you will receive an Observation that includes a screenshot of a webpage and some texts. This screenshot will feature Numerical Labels placed in the TOP LEFT corner of each Web Element.\nCarefully analyze the visual information to identify the Numerical Label corresponding to the Web Element that requires interaction, then follow the guidelines and choose one of the following actions:\n1. Click a Web Element.\n2. Delete existing content in a textbox and then type content. \n3. Scroll up or down. Multiple scrolls are allowed to browse the webpage. Pay attention!! The default scroll is the whole window. If the scroll widget is located in a certain area of the webpage, then you have to specify a Web Element in that area. I would hover the mouse there and then scroll.\n4. Wait. Typically used to wait for unfinished webpage processes, with a duration of 5 seconds.\n5. Go back, returning to the previous webpage.\n6. Google, directly jump to the Google search page. When you can't find information in some websites, try starting over with Google.\n7. Answer. This action should only be chosen when all questions in the task have been solved.\n\nCorrespondingly, Action should STRICTLY follow the format:\n- Click [Numerical_Label]\n- Type [Numerical_Label]; [Content]\n- Scroll [Numerical_Label or WINDOW]; [up or down]\n- Wait\n- GoBack\n- Google\n- ANSWER; [content]\n\nKey Guidelines You MUST follow:\n* Action guidelines *\n1) To input text, NO need to click textbox first, directly type content. After typing, the system automatically hits `ENTER` key. Sometimes you should click the search button to apply search filters. Try to use simple language when searching.  \n2) You must Distinguish between textbox and search button, don't type content into the button! If no textbox is found, you may need to click the search button first before the textbox is displayed. \n3) Execute only one action per iteration. \n4) STRICTLY Avoid repeating the same action if the webpage remains unchanged. You may have selected the wrong web element or numerical label. Continuous use of the Wait is also NOT allowed.\n5) When a complex Task involves multiple questions or steps, select \"ANSWER\" only at the very end, after addressing all of these questions (steps). Flexibly combine your own abilities with the information in the web page. Double check the formatting requirements in the task when ANSWER. \n* Web Browsing Guidelines *\n1) Don't interact with useless web elements like Login, Sign-in, donation that appear in Webpages. Pay attention to Key Web Elements like search textbox and menu.\n2) Vsit video websites like YouTube is allowed BUT you can't play videos. Clicking to download PDF is allowed and will be analyzed by the Assistant API.\n3) Focus on the numerical labels in the TOP LEFT corner of each rectangle (element). Ensure you don't mix them up with other numbers (e.g. Calendar) on the page.\n4) Focus on the date in task, you must look for results that match the date. It may be necessary to find the correct year, month and day at calendar.\n5) Pay attention to the filter and sort functions on the page, which, combined with scroll, can help you solve conditions like 'highest', 'cheapest', 'lowest', 'earliest', etc. Try your best to find the answer that best fits the task.\n\nYour reply should strictly follow the format:\nThought: {Your brief thoughts (briefly summarize the info that will help ANSWER)}\nAction: {One Action format you choose}\n\nThen the User will provide:\nObservation: {A labeled screenshot Given by User}"
+  },
+  {
+    "role": "user",
+    "content": "Now given a task: \u67e5\u8a62\u9ad8\u96c4\u7684\u65c5\u904a\u666f\u9ede  Please interact with https://www.google.com/ and get the answer. \nBefore taking action, carefully analyze the contents in [Manuals and QA pairs] below.\n                Determine whether [Manuals and QA pairs] contain relevant procedures, constraints, or guidelines that should be followed for this task.\n                If so, follow their guidance accordingly. If not, proceed with a logical and complete approach.\n[Key Guidelines You MUST follow]\n                Before taking any action, analyze the provided [Manuals and QA pairs] as a whole to determine if they contain useful procedures, constraints, or guidelines relevant to this task.\n                - If [Manuals and QA pairs] provide comprehensive guidance, strictly follow their instructions in an ordered and structured manner.\n                - If [Manuals and QA pairs] contain partial but useful information, integrate it into your approach while filling in the gaps logically.\n                - If [Manuals and QA pairs] are entirely irrelevant or insufficient, proceed with the best available method while ensuring completeness.\n\n                [Manuals and QA pairs]\n                Task Goal: \u67e5\u8a62\u9ad8\u96c4\u7684\u65c5\u904a\u666f\u9ede\nSteps:\n1. Open your web browser and navigate to www.google.com.\n2. In the search bar, type '\u9ad8\u96c4 \u65c5\u904a\u666f\u9ede' and press Enter to search for tourist attractions in Kaohsiung.\n3. From the search results, click on links that provide detailed information about tourist attractions in Kaohsiung, such as travel blogs, official tourism websites, or travel guides.\n4. Use the images provided in the search results to visually verify the relevance of the information about the attractions.\n5. For more detailed information on a specific attraction, click on the corresponding link or image that says '\u66f4\u591a\u95dc\u65bc\u666f\u9ede\u7684\u8cc7\u8a0a' (more about the attraction).\n\nsource: visual_descriptions.mdObservation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: I need to initiate a Google search for tourist attractions in Kaohsiung by using the provided guidelines. The search box is labeled as [6]. \n\nAction: Type [6]; \u9ad8\u96c4 \u65c5\u904a\u666f\u9ede"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: It looks like the search query \"\u9ad8\u96c4 \u65c5\u904a\u666f\u9ede\" was already entered in the search box (labeled [1]). Now, I need to click the search button (labeled [6]) to execute the search.\n\nAction: Click [6]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The search for \"\u9ad8\u96c4 \u65c5\u904a\u666f\u9ede\" returned results, and now I need to gather more information about the tourist attractions listed. I will click on the first link to explore detailed information about the \"\u9ad8\u96c4 | \u6587\u5316\u904a\u8247\" attraction, which is labeled as [22].\n\nAction: Click [22]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The current screenshot shows a page about \"\u9ad8\u96c4 | \u6587\u5316\u904a\u8247\" but does not have the detailed information I need. Instead of clicking, I should look for additional links or scroll down the page to find more relevant details about tourist attractions in Kaohsiung. I will scroll down the page to see if there are more relevant sections or details.\n\nAction: Scroll [WINDOW]; down"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The screenshot indicates that there are sections about a specific attraction, but additional relevant information is likely below the current view. Since this is important for finding more tourist attractions in Kaohsiung, I will scroll down to reveal more content.\n\nAction: Scroll [WINDOW]; down"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The current page seems to be related to the \"\u6587\u5316\u904a\u8247\" attraction, but it does not provide a comprehensive overview of other tourist attractions in Kaohsiung. I should scroll down further to see if more information about other attractions is available. \n\nAction: Scroll [WINDOW]; down"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The current screenshot reveals that there is a pop-up obstructing part of the content, which is likely preventing access to additional information about other tourist attractions. To proceed effectively, I should close the pop-up first to access the underlying content.\n\nAction: Click [1]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The screenshot indicates that I am on the Klook website with a focus on tourist attractions in Kaohsiung. The elements include options to view attractions, but a pop-up obstructs content. I need to dismiss the pop-up to properly access the information. The close button is likely at the top right of the pop-up, but if it doesn't work, I can also click outside the pop-up.\n\nAction: Click [31]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The screenshot shows a \"Cookie Policy\" pop-up obstructing the content on the Klook website. The close button for dismissing the pop-up may not be available or functioning properly. To proceed, I will attempt to click outside of the pop-up area to dismiss it and access the underlying content.\n\nAction: Click [0]"
+  },
+  {
+    "role": "user",
+    "content": [
+      {
+        "type": "text",
+        "text": "Observation: please analyze the attached screenshot and give the Thought and Action. I've provided the tag name of each element and the text it contains (if text exists). Note that <textarea> or <input> may be textbox, but not exactly. Please focus more on the screenshot and then refer to the textual information.\n\nAdditional Information: Looks like your previous thought has some problem in operation. Here is the message from Error Grounding Agent\nThe screenshot shows a security verification page, not a \"Cookie Policy\" pop-up as intended. This indicates that the page may require additional steps (like completing a CAPTCHA) to verify the user. Clicking outside the pop-up area won't solve this issue. Instead, you should complete the verification process as indicated in the image."
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "data:image/png;base64,{b64_img}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The current screenshot shows a security verification page, indicating that a CAPTCHA needs to be completed to proceed. I need to drag the puzzle piece to complete the verification as instructed in the prompt.\n\nAction: Click [0] (the puzzle piece) and drag it to the correct position to complete the CAPTCHA."
+  }
+]

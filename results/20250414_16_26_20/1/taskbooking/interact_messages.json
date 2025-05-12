@@ -1,0 +1,89 @@
+[
+  {
+    "role": "system",
+    "content": "Imagine you are a robot browsing the web, just like humans. Now you need to complete a task. In each iteration, you will receive an Observation that includes a screenshot of a webpage and some texts. This screenshot will feature Numerical Labels placed in the TOP LEFT corner of each Web Element.\nCarefully analyze the visual information to identify the Numerical Label corresponding to the Web Element that requires interaction, then follow the guidelines and choose one of the following actions:\n1. Click a Web Element.\n2. Delete existing content in a textbox and then type content. \n3. Scroll up or down. Multiple scrolls are allowed to browse the webpage. Pay attention!! The default scroll is the whole window. If the scroll widget is located in a certain area of the webpage, then you have to specify a Web Element in that area. I would hover the mouse there and then scroll.\n4. Wait. Typically used to wait for unfinished webpage processes, with a duration of 5 seconds.\n5. Go back, returning to the previous webpage.\n6. Google, directly jump to the Google search page. When you can't find information in some websites, try starting over with Google.\n7. Answer. This action should only be chosen when all questions in the task have been solved.\n\nCorrespondingly, Action should STRICTLY follow the format:\n- Click [Numerical_Label]\n- Type [Numerical_Label]; [Content]\n- Scroll [Numerical_Label or WINDOW]; [up or down]\n- Wait\n- GoBack\n- Google\n- ANSWER; [content]\n\nKey Guidelines You MUST follow:\n* Action guidelines *\n1) To input text, NO need to click textbox first, directly type content. After typing, the system automatically hits `ENTER` key. Sometimes you should click the search button to apply search filters. Try to use simple language when searching.  \n2) You must Distinguish between textbox and search button, don't type content into the button! If no textbox is found, you may need to click the search button first before the textbox is displayed. \n3) Execute only one action per iteration. \n4) STRICTLY Avoid repeating the same action if the webpage remains unchanged. You may have selected the wrong web element or numerical label. Continuous use of the Wait is also NOT allowed.\n5) When a complex Task involves multiple questions or steps, select \"ANSWER\" only at the very end, after addressing all of these questions (steps). Flexibly combine your own abilities with the information in the web page. Double check the formatting requirements in the task when ANSWER. \n* Web Browsing Guidelines *\n1) Don't interact with useless web elements like Login, Sign-in, donation that appear in Webpages. Pay attention to Key Web Elements like search textbox and menu.\n2) Vsit video websites like YouTube is allowed BUT you can't play videos. Clicking to download PDF is allowed and will be analyzed by the Assistant API.\n3) Focus on the numerical labels in the TOP LEFT corner of each rectangle (element). Ensure you don't mix them up with other numbers (e.g. Calendar) on the page.\n4) Focus on the date in task, you must look for results that match the date. It may be necessary to find the correct year, month and day at calendar.\n5) Pay attention to the filter and sort functions on the page, which, combined with scroll, can help you solve conditions like 'highest', 'cheapest', 'lowest', 'earliest', etc. Try your best to find the answer that best fits the task.\n\nYour reply should strictly follow the format:\nThought: {Your brief thoughts (briefly summarize the info that will help ANSWER)}\nAction: {One Action format you choose}\n\nThen the User will provide:\nObservation: {A labeled screenshot Given by User}\nHere is the special rules, please following steps:\nYou are a specialized **hotel booking agent** \n\n1. You must locate and interact with the following key web components:\n   - Location input box or dropdown\n   - Calendar widgets (for selecting check-in and check-out)\n   - Guest number selector (if needed)\n   - Search button\n\n2. If the location cannot be typed directly, try:\n   - Clicking on a recommended suggestion near the input area\n   - Scrolling to reveal hidden options\n\n3. If the correct date is not visible:\n   - Scroll within the calendar\n   - Switch months as needed\n   - Ensure the check-in and check-out dates **exactly match** the required task dates\n\n4. If repeated actions do not produce a change:\n   - Use the default values already present on the page\n   - Proceed to the next step to avoid getting stuck\n\n5. If the budget cannot be explicitly entered:\n   - Use price filters (such as sliders or checkboxes) if available\n   - Otherwise, manually select a hotel under NT$5000 based on visible prices\n\n6. When the page updates and displays hotel results, begin analyzing them by looking for:\n   - Hotel names\n   - Prices per night\n   - Booking buttons or hotel cards\n\nYou must **continuously scroll down or switch pages** (if necessary) to find results that meet the user\u2019s preferences:\n\n7. If no valid result is found on the first screen:\n   - Scroll [WINDOW]; down to reveal more results\n   - Repeat the scroll or interaction up to **3 times**\n   - Try using any filter or sort options to help refine the results\n---\nimportant, please remember:\n1. After typing a value (e.g., \"Taipei\") into a location input field, treat the typed value as valid and accepted **as long as it appears in the text input box**.\n\n2. Do NOT be misled by other static or unrelated areas of the page (e.g., footers or prior default display areas) that may still show outdated location names like \"Zhongli District\".\n\n3. Once input is complete, avoid re-checking or re-clicking the same field based solely on outdated page elements.\n\n"
+  },
+  {
+    "role": "user",
+    "content": "Now given a task: Find hotels in Taipei for 2 guests, checking in on 4/17 for one night under NT$5000.  Please interact with https://www.etrip.net/ and get the answer.Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: I need to change the location to Taipei and select the correct check-in date of April 17. Then I should search for available hotels.\n\nAction: Click [3]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: I need to change the location to \"Taipei\" by interacting with the current location input box.\n\nAction: Click [3]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The location input box hasn't been updated to \"Taipei\". I need to click the input box and type \"Taipei\" to ensure the system recognizes the location.\n\nAction: Click [3]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: I need to type \"Taipei\" into the location input box. This will update the search to focus on Taipei for hotel bookings.\n\nAction: Type [3]; Taipei"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The location is already set to \"\u53f0\u5317\u5e02\" (Taipei City), so now I need to update the check-in date to April 17.\n\nAction: Click [27]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The check-in date is already set to April 17. I need to proceed by clicking the search button to find available hotels under NT$5000.\n\nAction: Click [7]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: I need to ensure the price filter is set to under NT$5000. I should click on the \"\u50f9\u683c\" (Price) button to apply the correct filter.\n\nAction: Click [10]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: I need to adjust the upper limit of the price filter to NT$5000 to find suitable hotels. Then I'll apply the changes.\n\nAction: Type [13]; NT$5000"
+  },
+  {
+    "role": "user",
+    "content": [
+      {
+        "type": "text",
+        "text": "Observation: please analyze the attached screenshot and give the Thought and Action. I've provided the tag name of each element and the text it contains (if text exists). Note that <textarea> or <input> may be textbox, but not exactly. Please focus more on the screenshot and then refer to the textual information.\n[1]: <button> \"\u53f0\u5317\u5e02\";\t[2]: <button> \"4\u670817\u65e5\";\t[3]: <button> \"4\u670818\u65e5\";\t[4]: <button> \"2 \u4f4d\u5ba2\u4eba, 1 \u9593\u5ba2\u623f\";\t[5]: <button> \"\u641c\u5c0b\";\t[6]: <button> \"TWD\";\t[7]: <button> \"\u767b\u5165\";\t[8]: <button> \"\u7be9\u9078\u689d\u4ef6\";\t[9]: <button> \"\u5411\u53f3\u6372\u52d5\";\t[10]: <button> \"\u50f9\u683c\";\t[11]: <button> \"\";\t[12]: <input> \"\";\t[13]: <input> \"\";\t[14]: <button> \"\u6e05\u9664\";\t[15]: <button> \"\u5957\u7528\";\t[16]: <button> \"\u514d\u8cbb\u53d6\u6d88\";\t[17]: <button> \"4 \u81f3 5 \u661f\u7d1a\";\t[18]: <button> \"8.0+ \u8a55\u5206\";\t[19]: <button> \"\u6e38\u6cf3\u6c60\";\t[20]: <button> \"\u505c\u8eca\u5834\";\t[21]: <button> \"\u5bf5\u7269\u53cb\u5584\";\t[22]: <button> \"\u5bb6\u5ead\";\t[23]: <button> \"\u514d\u8cbbWi-Fi\u7121\u7dda\u7db2\u8def\";\t[24]: <button> \"\u8a2d\u65bd\";\t[25]: <button> \"\u81b3\u98df\u65b9\u6848\";\t[26]: <button> \"\u6aa2\u8996\u8a55\u5206\";\t[27]: \"\u6700\u4f73\u5339\u914d\u50f9\u683c\u6700\u4f4e\u8a55\u8ad6\u6700\u591a\u8ddd\u96e2\u9152\u5e97\u661f\u7d1a (\u7531\u4f4e\u81f3\u9ad8)\u9152\u5e97\u661f\u7d1a (\u7531\u9ad8\u81f3\u4f4e)\", \"\u6392\u5e8f\u65b9\u5f0f\";\t[28]: \"\u986f\u793a\u7e3d\u91d1\u984d\";\t[31]: <button> \"\";\t[32]: <button> \"\u66f4\u591a\u512a\u60e0\u67e5\u770b\u5168\u90e8\";\t[33]: \"$3,643$3,183\uff0f\u665a\u6aa2\u8996\u512a\u60e0\";\t[35]: \"\u963f\u6a39\u570b\u969b\u65c5\u5e97\u677e\u5c71\u5340, \u53f0\u5317\u5e02\u8ddd\u96e2\u53f0\u5317\u5e02\u4e2d\u5fc3 4.8 \u516c\u91cc8.9\u8d85\u8b9a6,876 \u5247\u8a55\u8ad6\";\t[36]: \"$7,004$5,530\uff0f\u665a\u6aa2\u8996\u512a\u60e0\";\t[37]: <button> \"\u5c55\u958b\u5730\u5716\";\t[38]: <button> \"\u653e\u5927\u5730\u5716\";\t[39]: <button> \"\u7e2e\u5c0f\u5730\u5716\";\t[40]: \"$1,372\";\t[41]: \"$3,375\";\t[42]: \"$4,934\";\t[43]: \"$5,333\";\t[44]: \"$2,392\";\t[45]: \"$4,113\";\t[46]: \"$1,245\";\t[47]: \"$3,266\";\t[48]: \"$13,115\";\t[49]: \"$4,058\";\t[50]: \"$2,431\";\t[51]: \"$5,530\";\t[52]: \"$3,183\";\t[54]: <button> \"\u885e\u661f\";\t[55]: <button> \"3D\";\t[56]: <button> \"\u5207\u63db\u5716\u5c64\";\nAdditional Information: Looks like your previous thought has some problem in operation. Here is the message from Error Grounding Agent\nThe upper limit of the price filter has been set to NT$5000, which aligns with your intent. However, it seems the changes have not yet been applied, as hotels above NT$5000, such as the one listed at NT$5,530, are still being shown.\n\nTo fix this, click on the \"\u5957\u7528\" button (which means \"apply\") to apply the price filter correctly. This should update the list of hotels to only show those within your specified budget."
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "data:image/png;base64,{b64_img}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: I need to click the \"\u5957\u7528\" button to apply the price filter, which will show only hotels under NT$5000.\n\nAction: Click [15]"
+  }
+]

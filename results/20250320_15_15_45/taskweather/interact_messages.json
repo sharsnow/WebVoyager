@@ -1,0 +1,57 @@
+[
+  {
+    "role": "system",
+    "content": "Imagine you are a robot browsing the web, just like humans. Now you need to complete a task. In each iteration, you will receive an Observation that includes a screenshot of a webpage and some texts. This screenshot will feature Numerical Labels placed in the TOP LEFT corner of each Web Element.\nCarefully analyze the visual information to identify the Numerical Label corresponding to the Web Element that requires interaction, then follow the guidelines and choose one of the following actions:\n1. Click a Web Element.\n2. Delete existing content in a textbox and then type content. \n3. Scroll up or down. Multiple scrolls are allowed to browse the webpage. Pay attention!! The default scroll is the whole window. If the scroll widget is located in a certain area of the webpage, then you have to specify a Web Element in that area. I would hover the mouse there and then scroll.\n4. Wait. Typically used to wait for unfinished webpage processes, with a duration of 5 seconds.\n5. Go back, returning to the previous webpage.\n6. Google, directly jump to the Google search page. When you can't find information in some websites, try starting over with Google.\n7. Answer. This action should only be chosen when all questions in the task have been solved.\n\nCorrespondingly, Action should STRICTLY follow the format:\n- Click [Numerical_Label]\n- Type [Numerical_Label]; [Content]\n- Scroll [Numerical_Label or WINDOW]; [up or down]\n- Wait\n- GoBack\n- Google\n- ANSWER; [content]\n\nKey Guidelines You MUST follow:\n* Action guidelines *\n1) To input text, NO need to click textbox first, directly type content. After typing, the system automatically hits `ENTER` key. Sometimes you should click the search button to apply search filters. Try to use simple language when searching.  \n2) You must Distinguish between textbox and search button, don't type content into the button! If no textbox is found, you may need to click the search button first before the textbox is displayed. \n3) Execute only one action per iteration. \n4) STRICTLY Avoid repeating the same action if the webpage remains unchanged. You may have selected the wrong web element or numerical label. Continuous use of the Wait is also NOT allowed.\n5) When a complex Task involves multiple questions or steps, select \"ANSWER\" only at the very end, after addressing all of these questions (steps). Flexibly combine your own abilities with the information in the web page. Double check the formatting requirements in the task when ANSWER. \n* Web Browsing Guidelines *\n1) Don't interact with useless web elements like Login, Sign-in, donation that appear in Webpages. Pay attention to Key Web Elements like search textbox and menu.\n2) Vsit video websites like YouTube is allowed BUT you can't play videos. Clicking to download PDF is allowed and will be analyzed by the Assistant API.\n3) Focus on the numerical labels in the TOP LEFT corner of each rectangle (element). Ensure you don't mix them up with other numbers (e.g. Calendar) on the page.\n4) Focus on the date in task, you must look for results that match the date. It may be necessary to find the correct year, month and day at calendar.\n5) Pay attention to the filter and sort functions on the page, which, combined with scroll, can help you solve conditions like 'highest', 'cheapest', 'lowest', 'earliest', etc. Try your best to find the answer that best fits the task.\n\nYour reply should strictly follow the format:\nThought: {Your brief thoughts (briefly summarize the info that will help ANSWER)}\nAction: {One Action format you choose}\n\nThen the User will provide:\nObservation: {A labeled screenshot Given by User}"
+  },
+  {
+    "role": "user",
+    "content": "Now given a task: What is the weather forecast for Taipei on 3/19 and 3/20?  Please interact with https://www.cwa.gov.tw/V8/C/W/week.html and get the answer.Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The screenshot indicates that I need to extract the weather forecast for Taipei on March 19 and March 20. It appears the relevant data can be found in the section corresponding to Taipei City. The data for March 20 (which is labeled) is visible, and I need to scroll to see the information for March 19.\n\nAction: Scroll [29]; down"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The relevant weather forecast for Taipei is found in the section for New Taipei City (it shares similar weather patterns). I need to locate the data for March 19 and March 20, which will be in the columns marked with these dates. The data is organized in a grid format, making it easy to extract temperature information.\n\nAction: Scroll [0]; down"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The screenshot indicates that I need to focus on the weather forecast for Taipei on March 19 and March 20. The relevant data includes the temperature ranges for those dates, which are presented in a grid format. The columns labeled with the respective dates will have the temperature details for both days.\n\nAction: Scroll [0]; down"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The screenshot provides the weather forecast for Taipei (labeled within the grid) on the specified dates. I need to focus on the temperatures for March 19 and March 20, located in the respective columns. The labels clearly indicate the relevant forecasts, allowing me to extract the daytime and nighttime temperatures for each date.\n\nAction: Scroll [0]; down"
+  },
+  {
+    "role": "user",
+    "content": [
+      {
+        "type": "text",
+        "text": "Observation: please analyze the attached screenshot and give the Thought and Action. I've provided the tag name of each element and the text it contains (if text exists). Note that <textarea> or <input> may be textbox, but not exactly. Please focus more on the screenshot and then refer to the textual information.\n[0]: \"\u82b1\u84ee\u7e23\";\t[1]: \"\u767d\u5929\";\t[2]: \"16\u2002-\u200218 61\u2002-\u200264\";\t[3]: \"14\u2002-\u200220 57\u2002-\u200268\";\t[4]: \"15\u2002-\u200222 59\u2002-\u200272\";\t[5]: \"16\u2002-\u200223 61\u2002-\u200273\";\t[6]: \"17\u2002-\u200225 63\u2002-\u200277\";\t[7]: \"19\u2002-\u200227 66\u2002-\u200281\";\t[8]: \"20\u2002-\u200229 68\u2002-\u200284\";\t[9]: \"\u665a\u4e0a\";\t[10]: \"14\u2002-\u200216 57\u2002-\u200261\";\t[11]: \"15\u2002-\u200218 59\u2002-\u200264\";\t[12]: \"16\u2002-\u200219 61\u2002-\u200266\";\t[13]: \"17\u2002-\u200221 63\u2002-\u200270\";\t[14]: \"19\u2002-\u200222 66\u2002-\u200272\";\t[15]: \"20\u2002-\u200224 68\u2002-\u200275\";\t[16]: \"21\u2002-\u200226 70\u2002-\u200279\";\t[17]: \"\u81fa\u6771\u7e23\";\t[18]: \"\u767d\u5929\";\t[19]: \"18\u2002-\u200219 64\u2002-\u200266\";\t[20]: \"15\u2002-\u200221 59\u2002-\u200270\";\t[21]: \"15\u2002-\u200223 59\u2002-\u200273\";\t[22]: \"17\u2002-\u200224 63\u2002-\u200275\";\t[23]: \"18\u2002-\u200225 64\u2002-\u200277\";\t[24]: \"19\u2002-\u200227 66\u2002-\u200281\";\t[25]: \"21\u2002-\u200231 70\u2002-\u200288\";\t[26]: \"\u665a\u4e0a\";\t[27]: \"15\u2002-\u200218 59\u2002-\u200264\";\t[28]: \"15\u2002-\u200219 59\u2002-\u200266\";\t[29]: \"17\u2002-\u200220 63\u2002-\u200268\";\t[30]: \"18\u2002-\u200221 64\u2002-\u200270\";\t[31]: \"19\u2002-\u200223 66\u2002-\u200273\";\t[32]: \"21\u2002-\u200225 70\u2002-\u200277\";\t[33]: \"23\u2002-\u200227 73\u2002-\u200281\";\t[34]: \"\u6f8e\u6e56\u7e23\";\t[35]: \"\u767d\u5929\";\t[36]: \"18\u2002-\u200219 64\u2002-\u200266\";\t[37]: \"18\u2002-\u200221 64\u2002-\u200270\";\t[38]: \"19\u2002-\u200222 66\u2002-\u200272\";\t[39]: \"19\u2002-\u200224 66\u2002-\u200275\";\t[40]: \"20\u2002-\u200225 68\u2002-\u200277\";\t[41]: \"20\u2002-\u200226 68\u2002-\u200279\";\t[42]: \"22\u2002-\u200226 72\u2002-\u200279\";\t[43]: \"\u665a\u4e0a\";\t[44]: \"18\u2002-\u200218 64\u2002-\u200264\";\t[45]: \"19\u2002-\u200220 66\u2002-\u200268\";\t[46]: \"19\u2002-\u200220 66\u2002-\u200268\";\t[47]: \"20\u2002-\u200221 68\u2002-\u200270\";\t[48]: \"20\u2002-\u200222 68\u2002-\u200272\";\t[49]: \"22\u2002-\u200223 72\u2002-\u200273\";\t[50]: \"22\u2002-\u200223 72\u2002-\u200273\";\t[51]: \"\u91d1\u9580\u7e23\";\t[52]: \"\u767d\u5929\";\t[53]: \"15\u2002-\u200219 59\u2002-\u200266\";\t[54]: \"13\u2002-\u200222 55\u2002-\u200272\";\t[55]: \"14\u2002-\u200223 57\u2002-\u200273\";\t[56]: \"15\u2002-\u200224 59\u2002-\u200275\";\t[57]: \"16\u2002-\u200224 61\u2002-\u200275\";\t[58]: \"17\u2002-\u200224 63\u2002-\u200275\";\t[59]: \"18\u2002-\u200224 64\u2002-\u200275\";\t[60]: \"\u665a\u4e0a\";\t[61]: \"13\u2002-\u200215 55\u2002-\u200259\";\t[62]: \"14\u2002-\u200217 57\u2002-\u200263\";\t[63]: \"15\u2002-\u200218 59\u2002-\u200264\";\t[64]: \"16\u2002-\u200219 61\u2002-\u200266\";\t[65]: \"17\u2002-\u200219 63\u2002-\u200266\";\t[66]: \"18\u2002-\u200220 64\u2002-\u200268\";\t[67]: \"18\u2002-\u200220 64\u2002-\u200268\";\t[68]: \"\u9023\u6c5f\u7e23\";\t[69]: \"\u767d\u5929\";\t[70]: \"12\u2002-\u200215 54\u2002-\u200259\";\t[71]: \"10\u2002-\u200217 50\u2002-\u200263\";\t[72]: \"11\u2002-\u200218 52\u2002-\u200264\";\t[73]: \"12\u2002-\u200218 54\u2002-\u200264\";\t[74]: \"13\u2002-\u200219 55\u2002-\u200266\";\t[75]: \"14\u2002-\u200219 57\u2002-\u200266\";\t[76]: \"15\u2002-\u200219 59\u2002-\u200266\";\t[77]: \"\u665a\u4e0a\";\t[78]: \"10\u2002-\u200212 50\u2002-\u200254\";\t[79]: \"11\u2002-\u200213 52\u2002-\u200255\";\t[80]: \"12\u2002-\u200214 54\u2002-\u200257\";\t[81]: \"13\u2002-\u200215 55\u2002-\u200259\";\t[82]: \"14\u2002-\u200216 57\u2002-\u200261\";\t[83]: \"15\u2002-\u200217 59\u2002-\u200263\";\t[84]: \"16\u2002-\u200217 61\u2002-\u200263\";\t[85]: \"\u8fd4\u56de\u9802\u7aef\";"
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "data:image/png;base64,{b64_img}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The weather forecast for Taipei on March 19 and March 20 can be extracted from the labeled elements in the screenshot. For March 19, the relevant data appears under the \"\u767d\u5929\" (daytime) and \"\u665a\u4e0a\" (nighttime) categories, while March 20 has similar categories to retrieve temperatures. I need to identify the corresponding numerical labels for both days.\n\nAction: Scroll [68]; down"
+  }
+]
