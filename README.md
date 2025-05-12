@@ -1,7 +1,6 @@
 # WebVoyager
 ## github網址  
-https://github.com/sharsnow/WebVoyager/tree/muti-agent  
-
+[https://github.com/sharsnow/WebVoyager/tree/RAG](https://github.com/sharsnow/WebVoyager/tree/RAG)
 ## AI agnet 操作
 
 python .\main.py  --api_key "API_KEY" --api_model gpt-4o --max_iter 10
