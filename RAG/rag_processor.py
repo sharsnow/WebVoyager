@@ -188,6 +188,7 @@ class ImageProcessor:
         for img_path in image_paths:
             try:
                 description = self.describe_image(os.path.join(output_dir, img_path))
+                print(f"img_path:{img_path}, description: {description}")
                 # description = self.describe_image(img_path)
                 descriptions[img_path] = description
             except Exception as e:
@@ -531,7 +532,6 @@ class RAGEngine:
             mode (str): Indexing mode ("append" or "overwrite").
             metadata (Dict[str, Any]): Metadata
         """
-        markdown_path = "RAG/" + markdown_path
         with open(markdown_path, "r", encoding="utf-8") as f:
             content = f.read()
 
@@ -881,30 +881,51 @@ def main() -> None:
         persist_directory="./chroma_db"
     )
 
-    
-    # Check if vector database already exists
-    md_path = "visual_descriptions.md"
-    if not pipeline.is_vector_db_built(persist_dir):
-        logger.info(f"Knowledge base not found. Building from {md_path}...")
-        pipeline.rag_engine.index_document(
-            document_path=md_path,
-            document_type="markdown",
-            mode="overwrite"  # First build should overwrite if something exists
-        )
-    else:
-        logger.info("Knowledge base found. Skipping rebuild.")
+    # Set paths
+    pdf_path = "instruction_manual.pdf"
+    output_dir = "output"
 
-    logger.info(f"Starting to process {md_path}...")
-    pipeline.rag_engine.index_document(
-        document_path=md_path,
-        document_type="markdown",  
-        mode="append"
+    # Process PDF
+    logger.info(f"Starting to process {pdf_path}...")
+    result = pipeline.process_pdf(
+        pdf_path=pdf_path,
+        output_dir=output_dir,
+        add_image_descriptions=True,
+        index_for_rag=True,
+        overwrite_enhanced_md=False
     )
 
+    # Log processing results
+    logger.info("Processing completed:")
+    logger.info(f"- Original PDF: {result['original_pdf']}")
+    logger.info(f"- Markdown file: {result['markdown_path']}")
+    logger.info(f"- Number of processed images: {result['image_count']}")
+    if 'enhanced_markdown_path' in result:
+        logger.info(f"- Enhanced Markdown: {result['enhanced_markdown_path']}")
+
+
+    # # Check if vector database already exists
+    # md_path = "visual_descriptions.md"
+    # if not pipeline.is_vector_db_built(persist_dir):
+    #     logger.info(f"Knowledge base not found. Building from {md_path}...")
+    #     pipeline.rag_engine.index_document(
+    #         document_path=md_path,
+    #         document_type="markdown",
+    #         mode="overwrite"  # First build should overwrite if something exists
+    #     )
+    # else:
+    #     logger.info("Knowledge base found. Skipping rebuild.")
+
+    # logger.info(f"Starting to process {md_path}...")
+    # pipeline.rag_engine.index_document(
+    #     document_path=md_path,
+    #     document_type="markdown",  
+    #     mode="append"
+    # )
 
     task_goal = "Find hotels in Taipei for 2 guests, check-in on 5/20 or one night, budget NT$5000."
-
     results = pipeline.search(query=task_goal, k=20)
+
     # Search only specific files
     # results = pipeline.search(query=task_goal, filter_dict={"source": "arXiv_enhanced.md"}, k=20)
     filtered_results = [{k: d[k] for k in ["section", "content", "source"] if k in d} for d in results]

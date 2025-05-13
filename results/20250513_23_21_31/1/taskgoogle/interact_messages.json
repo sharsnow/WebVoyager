@@ -1,0 +1,97 @@
+[
+  {
+    "role": "system",
+    "content": "Imagine you are a robot browsing the web, just like humans. Now you need to complete a task. In each iteration, you will receive an Observation that includes a screenshot of a webpage and some texts. This screenshot will feature Numerical Labels placed in the TOP LEFT corner of each Web Element.\nCarefully analyze the visual information to identify the Numerical Label corresponding to the Web Element that requires interaction, then follow the guidelines and choose one of the following actions:\n1. Click a Web Element.\n2. Delete existing content in a textbox and then type content. \n3. Scroll up or down. Multiple scrolls are allowed to browse the webpage. Pay attention!! The default scroll is the whole window. If the scroll widget is located in a certain area of the webpage, then you have to specify a Web Element in that area. I would hover the mouse there and then scroll.\n4. Wait. Typically used to wait for unfinished webpage processes, with a duration of 5 seconds.\n5. Go back, returning to the previous webpage.\n6. Google, directly jump to the Google search page. When you can't find information in some websites, try starting over with Google.\n7. Answer. This action should only be chosen when all questions in the task have been solved.\n\nCorrespondingly, Action should STRICTLY follow the format:\n- Click [Numerical_Label]\n- Type [Numerical_Label]; [Content]\n- Scroll [Numerical_Label or WINDOW]; [up or down]\n- Wait\n- GoBack\n- Google\n- ANSWER; [content]\n\nKey Guidelines You MUST follow:\n* Action guidelines *\n1) To input text, NO need to click textbox first, directly type content. After typing, the system automatically hits `ENTER` key. Sometimes you should click the search button to apply search filters. Try to use simple language when searching.  \n2) You must Distinguish between textbox and search button, don't type content into the button! If no textbox is found, you may need to click the search button first before the textbox is displayed. \n3) Execute only one action per iteration. \n4) STRICTLY Avoid repeating the same action if the webpage remains unchanged. You may have selected the wrong web element or numerical label. Continuous use of the Wait is also NOT allowed.\n5) When a complex Task involves multiple questions or steps, select \"ANSWER\" only at the very end, after addressing all of these questions (steps). Flexibly combine your own abilities with the information in the web page. Double check the formatting requirements in the task when ANSWER. \n* Web Browsing Guidelines *\n1) Don't interact with useless web elements like Login, Sign-in, donation that appear in Webpages. Pay attention to Key Web Elements like search textbox and menu.\n2) Vsit video websites like YouTube is allowed BUT you can't play videos. Clicking to download PDF is allowed and will be analyzed by the Assistant API.\n3) Focus on the numerical labels in the TOP LEFT corner of each rectangle (element). Ensure you don't mix them up with other numbers (e.g. Calendar) on the page.\n4) Focus on the date in task, you must look for results that match the date. It may be necessary to find the correct year, month and day at calendar.\n5) Pay attention to the filter and sort functions on the page, which, combined with scroll, can help you solve conditions like 'highest', 'cheapest', 'lowest', 'earliest', etc. Try your best to find the answer that best fits the task.\n\nYour reply should strictly follow the format:\nThought: {Your brief thoughts (briefly summarize the info that will help ANSWER)}\nAction: {One Action format you choose}\n\nThen the User will provide:\nObservation: {A labeled screenshot Given by User}"
+  },
+  {
+    "role": "user",
+    "content": "Now given a task: \u67e5\u8a62\u9ad8\u96c4\u7684\u65c5\u904a\u666f\u9ede  Please interact with https://www.google.com/ and get the answer. \nBefore taking action, carefully analyze the contents in [Manuals and QA pairs] below.\n                Determine whether [Manuals and QA pairs] contain relevant procedures, constraints, or guidelines that should be followed for this task.\n                If so, follow their guidance accordingly. If not, proceed with a logical and complete approach.\n[Key Guidelines You MUST follow]\n                Before taking any action, analyze the provided [Manuals and QA pairs] as a whole to determine if they contain useful procedures, constraints, or guidelines relevant to this task.\n                - If [Manuals and QA pairs] provide comprehensive guidance, strictly follow their instructions in an ordered and structured manner.\n                - If [Manuals and QA pairs] contain partial but useful information, integrate it into your approach while filling in the gaps logically.\n                - If [Manuals and QA pairs] are entirely irrelevant or insufficient, proceed with the best available method while ensuring completeness.\n\n                [Manuals and QA pairs]\n                Task Goal: \u67e5\u8a62\u9ad8\u96c4\u7684\u65c5\u904a\u666f\u9ede\n\nSteps:\n1. Open your web browser.\n2. Navigate to www.google.com.\n3. In the search bar, type '\u9ad8\u96c4 \u65c5\u904a\u666f\u9ede' and press Enter.\n4. Review the search results page for a list of tourist attractions in Kaohsiung.\n5. Select a reputable source from the search results, such as a well-known travel guide or local government tourism page.\n6. Click on the link to open the website and gather detailed information about the attractions.\n7. Record the following details for each attraction:\n   a. Name of the attraction\n   b. Entry fee (if applicable)\n   c. Operating hours (if provided)\n   d. Other relevant information about the attraction\n\nsource: instruction_manual.pdfObservation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The task is to search for tourist attractions in Kaohsiung on Google. The relevant fields and buttons are identified in the screenshot, specifically the search textbox labeled as [6]. I will proceed to type the query \"\u9ad8\u96c4 \u65c5\u904a\u666f\u9ede\" into the search bar to find the information needed.\n\n**Action:** Type [6]; \u9ad8\u96c4 \u65c5\u904a\u666f\u9ede"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** Based on the provided elements from the screenshot, the search bar has been identified as [1] containing \"\u9ad8\u96c4 \u65c5\u904a\u666f\u9ede\" and the search button as [6] labeled \"\u641c\u5c0b\". I need to click the search button to execute the search since the query is already present in the textbox.\n\n**Action:** Click [6]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The search results for \"\u9ad8\u96c4 \u65c5\u904a\u666f\u9ede\" have successfully appeared on the page, showing several tourist attractions in Kaohsiung. I can now gather detailed information directly from the search results, focusing on the highlighted attractions and their details.\n\n**Action:** Scroll [WINDOW]; down"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The search results for tourist attractions in Kaohsiung have displayed several categories and specific locations. Key attractions listed include outdoor attractions, museums, and historical sites. The next step is to gather more detailed information from one of the links provided in the search results. I can choose between clicking on a reputable source such as the one from Bobby World or Kaohsiung Travel.\n\n**Action:** Click [14]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The search results list several tourist attractions in Kaohsiung, including outdoor sites, museums, and historical points. I can further explore the reputable source titled \"\u6ce2\u6bd4\u770b\u4e16\u754c\" for detailed recommendations. The link to this source is present in the elements, designated as [13] and [14], which would provide in-depth information.\n\n**Action:** Click [13]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The screenshot shows a generic page from \"\u6ce2\u6bd4\u770b\u4e16\u754c\" with sections related to different travel destinations but does not provide specific details about tourist attractions in Kaohsiung. The options for travel in Taiwan and Kaohsiung are visible, particularly the link labeled [9] \"\u9ad8\u96c4\u666f\u9ede,\" which likely contains the relevant information about tourist spots in Kaohsiung. I need to click this link to access the desired content.\n\n**Action:** Click [9]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The screenshot indicates that I've accessed the page titled \"\u9ad8\u96c4\u666f\u9ede\u63a8\u85a6,\" which seems to include information about tourist attractions in Kaohsiung. However, important details are not immediately visible, and the section containing pictures and content may need to be scrolled down to reveal further information about the recommended attractions. \n\n**Action:** Scroll [WINDOW]; down"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The screenshot displays a webpage that includes a section about tourist attractions in Kaohsiung. Key information is partially visible, but more details are likely hidden. The button labeled \"READ MORE\" presents an opportunity to access additional content. Therefore, I will click this button to obtain more comprehensive information about the attractions.\n\n**Action:** Click [9]"
+  },
+  {
+    "role": "user",
+    "content": [
+      {
+        "type": "text",
+        "text": "Observation: please analyze the attached screenshot and give the Thought and Action. I've provided the tag name of each element and the text it contains (if text exists). Note that <textarea> or <input> may be textbox, but not exactly. Please focus more on the screenshot and then refer to the textual information.\n[0]: \"\u6ce2\u6bd4\u770b\u4e16\u754c\";\t[1]: \"\u65e5\u672c\u81ea\u7531\u884c\";\t[2]: \"\u97d3\u570b\u81ea\u7531\u884c\";\t[3]: \"\u4e9e\u6d32\u81ea\u7531\u884c\";\t[4]: \"\u7f8e\u570b\u81ea\u7531\u884c\";\t[5]: \"\u6b50\u6d32\u81ea\u7531\u884c\";\t[6]: \"\u53f0\u7063\u65c5\u904a\u666f\u9ede\";\t[7]: \"\u8b80\u8005\u5c08\u5c6c\u512a\u60e0\";\t[8]: \"\u95dc\u65bc\u6ce2\u6bd4\";\t[9]: \"\u9ad8\u96c4\u666f\u9ede\";\t[10]: \"\u6ce2\u6bd4\u770b\u4e16\u754c\";\nAdditional Information: Looks like your previous thought has some problem in operation. Here is the message from Error Grounding Agent\nIt appears that the intended action of clicking the \"READ MORE\" button did not result in displaying additional content about the tourist attractions in Kaohsiung. The information visible in the screenshot does not show any expanded details, and it could be due to the button not functioning or the page not refreshing properly. To correct this, consider attempting to refresh the page and then clicking the button again. If that does not resolve the issue, try checking for any pop-up blockers or other browser settings that may interfere with loading additional content."
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "data:image/png;base64,{b64_img}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The screenshot shows the webpage titled \"\u9ad8\u96c4\u666f\u9ede\u63a8\u85a6,\" indicating that it contains information about tourist attractions in Kaohsiung. Since the \"READ MORE\" functionality did not work previously, I will refresh the page to see if it can display more content. Following this, I will attempt to access the button again to uncover the details about the attractions. \n\n**Action:** Wait"
+  },
+  {
+    "role": "user",
+    "content": "The action you have chosen cannot be exected. Please double-check if you have selected the wrong Numerical Label or Action or Action format. Then provide the revised Thought and Action."
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** Since the previous attempt to access more information did not work as expected, refreshing the page directly is not possible now. Instead, I should try to click on the \"\u9ad8\u96c4\u666f\u9ede\" link again to see if it can return to the intended section with proper loading this time.\n\n**Action:** Click [9]"
+  }
+]

@@ -1,0 +1,97 @@
+[
+  {
+    "role": "system",
+    "content": "Imagine you are a robot browsing the web, just like humans. Now you need to complete a task. In each iteration, you will receive an Observation that includes a screenshot of a webpage and some texts. This screenshot will feature Numerical Labels placed in the TOP LEFT corner of each Web Element.\nCarefully analyze the visual information to identify the Numerical Label corresponding to the Web Element that requires interaction, then follow the guidelines and choose one of the following actions:\n1. Click a Web Element.\n2. Delete existing content in a textbox and then type content. \n3. Scroll up or down. Multiple scrolls are allowed to browse the webpage. Pay attention!! The default scroll is the whole window. If the scroll widget is located in a certain area of the webpage, then you have to specify a Web Element in that area. I would hover the mouse there and then scroll.\n4. Wait. Typically used to wait for unfinished webpage processes, with a duration of 5 seconds.\n5. Go back, returning to the previous webpage.\n6. Google, directly jump to the Google search page. When you can't find information in some websites, try starting over with Google.\n7. Answer. This action should only be chosen when all questions in the task have been solved.\n\nCorrespondingly, Action should STRICTLY follow the format:\n- Click [Numerical_Label]\n- Type [Numerical_Label]; [Content]\n- Scroll [Numerical_Label or WINDOW]; [up or down]\n- Wait\n- GoBack\n- Google\n- ANSWER; [content]\n\nKey Guidelines You MUST follow:\n* Action guidelines *\n1) To input text, NO need to click textbox first, directly type content. After typing, the system automatically hits `ENTER` key. Sometimes you should click the search button to apply search filters. Try to use simple language when searching.  \n2) You must Distinguish between textbox and search button, don't type content into the button! If no textbox is found, you may need to click the search button first before the textbox is displayed. \n3) Execute only one action per iteration. \n4) STRICTLY Avoid repeating the same action if the webpage remains unchanged. You may have selected the wrong web element or numerical label. Continuous use of the Wait is also NOT allowed.\n5) When a complex Task involves multiple questions or steps, select \"ANSWER\" only at the very end, after addressing all of these questions (steps). Flexibly combine your own abilities with the information in the web page. Double check the formatting requirements in the task when ANSWER. \n* Web Browsing Guidelines *\n1) Don't interact with useless web elements like Login, Sign-in, donation that appear in Webpages. Pay attention to Key Web Elements like search textbox and menu.\n2) Vsit video websites like YouTube is allowed BUT you can't play videos. Clicking to download PDF is allowed and will be analyzed by the Assistant API.\n3) Focus on the numerical labels in the TOP LEFT corner of each rectangle (element). Ensure you don't mix them up with other numbers (e.g. Calendar) on the page.\n4) Focus on the date in task, you must look for results that match the date. It may be necessary to find the correct year, month and day at calendar.\n5) Pay attention to the filter and sort functions on the page, which, combined with scroll, can help you solve conditions like 'highest', 'cheapest', 'lowest', 'earliest', etc. Try your best to find the answer that best fits the task.\n\nYour reply should strictly follow the format:\nThought: {Your brief thoughts (briefly summarize the info that will help ANSWER)}\nAction: {One Action format you choose}\n\nThen the User will provide:\nObservation: {A labeled screenshot Given by User}\nHere is the special rules, please following steps:\nYou are a specialized **hotel booking agent** \n\n1. You must locate and interact with the following key web components:\n   - Location input box or dropdown\n   - Calendar widgets (for selecting check-in and check-out)\n   - Guest number selector (if needed)\n   - Search button\n\n2. If the correct date is not visible:\n   - Scroll within the calendar\n   - Switch months as needed\n   - Ensure the check-in and check-out dates **exactly match** the required task dates\n\n3. If repeated actions do not produce a change:\n   - Use the default values already present on the page\n   - Proceed to the next step to avoid getting stuck\n\n4. If the budget cannot be explicitly entered:\n   - Use price filters (such as sliders or checkboxes) if available\n   - Otherwise, manually select a hotel under NT$5000 based on visible prices\n\n5. When the page updates and displays hotel results, begin analyzing them by looking for:\n   - Hotel names\n   - Prices per night\n   - Booking buttons or hotel cards\n\nYou must **continuously scroll down or switch pages** (if necessary) to find results that meet the user\u2019s preferences:\n\n6. If no valid result is found on the first screen:\n   - Scroll [WINDOW]; down to reveal more results\n   - Repeat the scroll or interaction up to **3 times**\n---\nvery important, please remember!!!!:\n1. After typing a value (e.g., \"Taipei\") into a location input field, treat the typed value as valid and accepted **as long as it appears in the text input box**.\n\n2. Do NOT be misled by other static or unrelated areas of the page (e.g., footers or prior default display areas) that may still show outdated location names like \"Zhongli District\".\n\n3. Once input is complete, avoid re-checking or re-clicking the same field based solely on outdated page elements.\n4. Please focus on the destination you entered and disregard other areas!!!!!\n5. If you find a hotel that matches the target, please return the hotel\u2019s name, price, guest capacity, and available dates as the answer.\n\n"
+  },
+  {
+    "role": "user",
+    "content": "Now given a task: Find hotels in Kaohsiung from May 15 for two days for 2 guests  Please interact with https://www.etrip.net/ and get the answer. \nBefore taking action, carefully analyze the contents in [Manuals and QA pairs] below.\n                Determine whether [Manuals and QA pairs] contain relevant procedures, constraints, or guidelines that should be followed for this task.\n                If so, follow their guidance accordingly. If not, proceed with a logical and complete approach.\n[Key Guidelines You MUST follow]\n                Before taking any action, analyze the provided [Manuals and QA pairs] as a whole to determine if they contain useful procedures, constraints, or guidelines relevant to this task.\n                - If [Manuals and QA pairs] provide comprehensive guidance, strictly follow their instructions in an ordered and structured manner.\n                - If [Manuals and QA pairs] contain partial but useful information, integrate it into your approach while filling in the gaps logically.\n                - If [Manuals and QA pairs] are entirely irrelevant or insufficient, proceed with the best available method while ensuring completeness.\n\n                [Manuals and QA pairs]\n                Task Goal: Find hotels in Kaohsiung from May 15 for two days for 2 guests\n\nSteps:\n1. Open your preferred web browser and navigate to a hotel booking website such as Booking.com, Expedia, or a similar platform.\n2. In the search bar, enter \"Kaohsiung\" as the destination.\n3. Set the check-in date to May 15 and the check-out date to May 17.\n4. Specify the number of guests as 2.\n5. Click the search button to view available hotels.\n6. Review the list of hotels and use available filters (such as price range, guest ratings, or hotel amenities) to narrow down the search results according to your preferences.\n7. Select a hotel by clicking on its name or the 'Book' button next to the listing.\n8. Proceed to enter guest information and payment details as required to complete the booking.\n9. Confirm all details are correct and finalize the booking by clicking the 'Confirm' or 'Book Now' button.\n10. You will receive a confirmation email or message; ensure to save or print this for your records.\n\nsource: instruction_manual_enhanced.mdObservation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The website for hotel booking is displayed. The destination input field (Numerical Label 3) is currently not filled. The check-in date (Numerical Label 4) needs to be set to May 15, and the check-out date (Numerical Label 5) to May 17. The guest number selection (Numerical Label 6) needs to ensure it reflects 2 guests. Finally, I need to click the search button (Numerical Label 7) to proceed.\n\n**Action:** Type [3]; Kaohsiung"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The destination field (Numerical Label 3) is correctly labeled but needs to be set properly. The check-in date (Numerical Label 4) must be changed from May 13 to May 15. The check-out date (Numerical Label 5) needs to change from May 14 to May 17. The guest count (Numerical Label 6) should also be updated from 1 guest to 2 guests. \n\nTo proceed, I need to first adjust the check-in date to May 15 by clicking on it (Numerical Label 4), then select the correct date.\n\n**Action:** Click [4]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The current check-in date is still set to May 13 (Numerical Label 4). I need to click on the date for May 15 in the calendar, which would allow me to update the check-in date accordingly. After that, I will also need to change the check-out date to May 17 and ensure the guest count is set to 2.\n\n**Action:** Click [27]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The screenshot shows that the check-in date of May 15 (Numerical Label 4) is selectable but has not been clicked yet. I need to click on it to confirm it as the check-in date. After selecting May 15, I will also need to ensure the check-out date is set to May 17 (Numerical Label 5) and adjust the guest count to 2 (Numerical Label 6) before proceeding.\n\n**Action:** Click [27]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The check-in date of May 15 (Numerical Label 4) is currently displayed but not selected yet. I need to click on it to confirm it. After that, I must also set the check-out date for May 17 (Numerical Label 5) and adjust the guest count to 2 (Numerical Label 6). Following those actions, I will be able to click the search button (Numerical Label 7) to proceed further.\n\n**Action:** Click [4]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The check-in date of May 15 (Numerical Label 4) is currently displayed but not actively selected. I must click on it to confirm the check-in date. Additionally, after confirming the check-in date, I need to ensure that the check-out date is set to May 17 (Numerical Label 5) and adjust the guest count to 2 (Numerical Label 6). Once these settings are complete, I can click the search button (Numerical Label 7) to proceed with my hotel search.\n\n**Action:** Click [4]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The check-in date of May 15 (Numerical Label 4) is displayed and needs to be confirmed. The check-out date (Numerical Label 5) is not visible but should be set to May 17, and the guest count (Numerical Label 6) needs to be confirmed at 2 guests. I will first confirm the check-in date and then check the set dates before proceeding.\n\n**Action:** Click [4]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** Currently, the check-in date is set to May 15 (Numerical Label 4). The check-out date (Numerical Label 5) is not visible, and I need to select May 17 from the calendar. The guest count (Numerical Label 6) indicates \"2 \u4f4d\u5ba2\u4eba,\" but we need to ensure it's set for 2 guests as required. I will first navigate the calendar to select the check-out date and confirm the guest count is correct.\n\n**Action:** Click [5]"
+  },
+  {
+    "role": "user",
+    "content": "Observation: A screenshot and some texts. (Omitted in context.)"
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The screenshot indicates that the check-in date is set to May 15 (Numerical Label 4), but the check-out date (Numerical Label 5) is not visible. There is a visible guest count of \"2 \u4f4d\u5ba2\u4eba, 1 \u9593\u5ba2\u623f\" (2 guests, 1 room), which seems correct. To proceed, I need to access the next month to select the check-out date of May 17. I will need to click the button to navigate forward (Numerical Label 44) to access June for the check-out date.\n\n**Action:** Click [44]"
+  },
+  {
+    "role": "user",
+    "content": [
+      {
+        "type": "text",
+        "text": "Observation: please analyze the attached screenshot and give the Thought and Action. I've provided the tag name of each element and the text it contains (if text exists). Note that <textarea> or <input> may be textbox, but not exactly. Please focus more on the screenshot and then refer to the textual information.\n[1]: <button> \"TWD\";\t[2]: <button> \"\u767b\u5165\";\t[3]: <button> \"\u9ad8\u96c4\u5e02\";\t[4]: <button> \"5\u670815\u65e5\";\t[5]: <button> \"\u9000\u623f\";\t[6]: <button> \"2 \u4f4d\u5ba2\u4eba, 1 \u9593\u5ba2\u623f\";\t[7]: <button> \"\u641c\u5c0b\";\t[8]: <button> \"Go to previous month\";\t[9]: <button> \"1\";\t[10]: <button> \"2\";\t[11]: <button> \"3\";\t[12]: <button> \"4\";\t[13]: <button> \"5\";\t[14]: <button> \"6\";\t[15]: <button> \"7\";\t[16]: <button> \"8\";\t[17]: <button> \"9\";\t[18]: <button> \"10\";\t[19]: <button> \"11\";\t[20]: <button> \"12\";\t[21]: <button> \"13\";\t[22]: <button> \"14\";\t[23]: <button> \"15\";\t[24]: <button> \"16\";\t[25]: <button> \"17\";\t[26]: <button> \"18\";\t[27]: <button> \"19\";\t[28]: <button> \"20\";\t[29]: <button> \"21\";\t[30]: <button> \"22\";\t[31]: <button> \"23\";\t[32]: <button> \"24\";\t[33]: <button> \"25\";\t[34]: <button> \"26\";\t[35]: <button> \"27\";\t[36]: <button> \"28\";\t[37]: <button> \"29\";\t[38]: <button> \"30\";\t[44]: <button> \"Go to next month\";\t[47]: <button> \"1\";\t[48]: <button> \"2\";\t[49]: <button> \"3\";\t[50]: <button> \"4\";\t[51]: <button> \"5\";\t[52]: <button> \"6\";\t[53]: <button> \"7\";\t[54]: <button> \"8\";\t[55]: <button> \"9\";\t[56]: <button> \"10\";\t[57]: <button> \"11\";\t[58]: <button> \"12\";\t[59]: <button> \"13\";\t[60]: <button> \"14\";\t[61]: <button> \"15\";\t[62]: <button> \"16\";\t[63]: <button> \"17\";\t[64]: <button> \"18\";\t[65]: <button> \"19\";\t[66]: <button> \"20\";\t[67]: <button> \"21\";\t[68]: <button> \"22\";\t[69]: <button> \"23\";\t[70]: <button> \"24\";\t[71]: <button> \"25\";\t[72]: <button> \"26\";\t[73]: <button> \"27\";\t[74]: <button> \"28\";\t[75]: <button> \"29\";\t[76]: <button> \"30\";\t[77]: <button> \"31\";\t[80]: <button> \"\u67e5\u770b\u5168\u90e8\";\t[81]: <button> \"Chiyayi County\";\t[82]: \"\u963f\u91cc\u5c71\u9ad8\u5c71\u9752\u5927\u98ef\u5e976.2\u4ee4\u4eba\u6109\u5feb7,072 \u5247\u8a55\u8ad6\u6bcf\u665a\u50f9\u683c\u8d77$4,575$3,089\";\t[86]: \"8.3\";\t[87]: <button> \"\";\nAdditional Information: Looks like your previous thought has some problem in operation. Here is the message from Error Grounding Agent\nThe screenshot shows that the check-in date is correctly set to May 15, but the check-out date is not visible, which is problematic for making further selections. Additionally, the action to navigate to the next month via the button labeled \">\" (Numerical Label 44) will not make the check-out date visible since it navigates to June, not the intended check-out date of May 17. \n\nCorrection Strategy: Instead of clicking to navigate to June, you should either scroll down or look for a way to select the check-out date within the visible calendar for May. If the check-out calendar is not accessible or the option to select a date is hidden, check if there\u2019s an option to expand or reveal more dates for May directly."
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "data:image/png;base64,{b64_img}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "assistant",
+    "content": "**Thought:** The check-in date is confirmed for May 15, and the guest count is correctly set to 2 guests. However, the check-out date is not specified and is hidden in the screenshot. Instead of trying to navigate to the next month, I should look for an option to expand or reveal check-out dates for May directly, as selecting the next month will not help with the desired check-out date of May 17. There should be a way to select the check-out date within the visible month of May.\n\n**Action:** Click [5]"
+  }
+]

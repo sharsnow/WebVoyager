@@ -574,10 +574,12 @@ def get_web_request(task, task_dir, args, client, task_logger): #取得用戶回
     return messages
 
 def index_pdf(
+        pdf_path: str,
+        output_dir: str,
         api_key: str,
         logger: logging.Logger,
         persist_directory: str = "./chroma_db"
-) :
+    ) :
     """
     Indexes a PDF and converts it to Markdown.
 
@@ -597,42 +599,43 @@ def index_pdf(
         embedding_type="openai",
         persist_directory=persist_directory
     )
+    logger.info(f"Starting to process {pdf_path}")
 
-    #檢查向量資料庫是否已經存在
-    md_path = "visual_descriptions.md"
-    if not pipeline.is_vector_db_built(persist_directory):
-        logger.info(f"Knowledge base not found. Building from {md_path}...")
-        pipeline.rag_engine.index_document(
-            document_path=md_path,
-            document_type="markdown",
-            mode="overwrite"  # First build should overwrite if something exists
-        )
-    else:
-        logger.info("Knowledge base found. Skipping rebuild.")
+    # #檢查向量資料庫是否已經存在
+    # md_path = "visual_descriptions.md"
+    # if not pipeline.is_vector_db_built(persist_directory):
+    #     logger.info(f"Knowledge base not found. Building from {md_path}...")
+    #     pipeline.rag_engine.index_document(
+    #         document_path=md_path,
+    #         document_type="markdown",
+    #         mode="overwrite"  # First build should overwrite if something exists
+    #     )
+    # else:
+    #     logger.info("Knowledge base found. Skipping rebuild.")
 
-    logger.info(f"Starting to process {md_path}...")
-    pipeline.rag_engine.index_document(
-        document_path=md_path,
-        document_type="markdown",  
-        mode="append"
-    )    
+    # logger.info(f"Starting to process {md_path}...")
+    # pipeline.rag_engine.index_document(
+    #     document_path=md_path,
+    #     document_type="markdown",  
+    #     mode="append"
+    # )    
     # Convert to markdown result
-    # result = pipeline.process_pdf(
-    #     pdf_path=pdf_path,
-    #     output_dir=output_dir,
-    #     add_image_descriptions=True,
-    #     index_for_rag=True,
-    #     overwrite_enhanced_md=False
-    # )
+    result = pipeline.process_pdf(
+        pdf_path=pdf_path,
+        output_dir=output_dir,
+        add_image_descriptions=True,
+        index_for_rag=True,
+        overwrite_enhanced_md=False
+    )
    
-    # logger.info("Processing completed:")
-    # logger.info(f"- Original PDF: {result['original_pdf']}")
-    # logger.info(f"- Markdown file: {result['markdown_path']}")
-    # logger.info(f"- Number of processed images: {result['image_count']}")
-    # if 'enhanced_markdown_path' in result:
-    #     logger.info(f"- Enhanced Markdown: {result['enhanced_markdown_path']}")
+    logger.info("Processing completed:")
+    logger.info(f"- Original PDF: {result['original_pdf']}")
+    logger.info(f"- Markdown file: {result['markdown_path']}")
+    logger.info(f"- Number of processed images: {result['image_count']}")
+    if 'enhanced_markdown_path' in result:
+        logger.info(f"- Enhanced Markdown: {result['enhanced_markdown_path']}")
 
-    # return result
+    return result
 
 
 def search_rag(

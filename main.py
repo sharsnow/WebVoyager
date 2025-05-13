@@ -82,8 +82,10 @@ def main():
 
         msg = [] #紀錄本次的回覆
         init_logger = run.setup_logger(cycle_dir, 'data.log')
+        markdown_output_dir = "output"
+        
         # 載入資料庫
-        run.index_pdf(api_key=args.api_key, logger=init_logger)
+        run.index_pdf(pdf_path="RAG/instruction_manual.pdf", output_dir=markdown_output_dir, api_key=args.api_key, logger=init_logger)
         print("tasks number: " + str(len(tasks)))
         print("---------------waiting for search...--------------------------")
         for task_id in range(len(tasks)): # 逐一處理每個task
